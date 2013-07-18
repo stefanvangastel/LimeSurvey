@@ -442,8 +442,7 @@
         
         protected function renderSelect($item)
         {
-            $result = CHtml::label($item['title'],  $item['name']);
-            if (is_array(current($item['values'])))
+			if (is_array(current($item['values'])))
             {
                 $listData = CHtml::listData($item['values'], 'id', 'title');
             }
@@ -451,12 +450,20 @@
             {
                 $listData = $item['values'];
             }
-            $result .= CHtml::dropDownList($item['name'], $item['value'], $listData, array(
-                'id' => $item['name'],
-                'prompt' => gT('Please choose...')
-            ));
-            
-            return $result;
+
+			return $this->widget('bootstrap.widgets.TbSelect2', array(
+				'data' => $listData,
+				'name' => $item['name'],
+				'value' => $item['value'],
+				'options' => array(
+					'placeholder' => gT('Please choose...'),
+				),
+				'htmlOptions' => array(
+					'class' => 'test',
+					'empty' => ''
+				)
+
+			), true);
         }
         
         protected function renderSub($item, $imageUrl, $level)

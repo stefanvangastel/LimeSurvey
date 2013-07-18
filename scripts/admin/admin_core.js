@@ -238,12 +238,6 @@ $(document).ready(function(){
     // This also works for multiple tabbed interfaces, allowing nesting.
     $('.tabs').tabs(); 
     
-    $(".flashmessage").each(function() {
-        $(this).notify().notify('create','themeroller',{},{custom:true,
-        speed: 500,
-        expires: 5000
-        });
-    });
 /*
     if ($("#question_type").not('.none').length > 0 && $("#question_type").attr('type')!='hidden'){
         $("#question_type").msDropDown({onInit:qTypeDropdownInit});
