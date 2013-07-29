@@ -1862,7 +1862,7 @@ function createFieldMap($surveyid, $force_refresh=false, $questionid=false, $sLa
     {
         ++$questionSeq;
 
-        // fix fact taht group_order may have gaps
+        // fix fact that group_order may have gaps
         if ($_groupOrder != $arow->groups['group_order']) {
             $_groupOrder = $arow->groups['group_order'];
             ++$groupSeq;
