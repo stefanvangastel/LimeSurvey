@@ -7,10 +7,14 @@
                 'localized' => true,
                 'label' => 'Question text:'
             ),
-            'help' => array(
-                'type' => 'html',
-                'localized' => true,
-                'label' => 'Help text:'
+            'list' => array( 
+                'items' => array( 
+                    'help' => array( 
+                        'type' => 'html',
+                        'localized' => true,
+                        'label' => 'Help text:'
+                    )
+                )
             ),
             'mandatory' => array(
                 'type' => 'boolean',
