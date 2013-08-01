@@ -1,9 +1,10 @@
 <?php 
     App()->getClientScript()->registerScriptFile('scripts/questions/update.js');
     App()->getClientScript()->registerScriptFile('http://www.keyframesandcode.com/resources/javascript/jQuery/populate/jquery.populate.js');
-    $form = 'updateform';
+    $form = 'settingswidget';
     Yii::import('application.helpers.PluginSettingsHelper');
-    $PluginSettings = new PluginSettingsHelper();
+    // Create a settingswidget to render the settingsblock
+    $PluginSettings = $this->beginWidget('ext.SettingsWidget.SettingsWidget');
     
     echo CHtml::beginForm('', 'post', array('id' => $form, 'class' => 'form-horizontal'));
 
@@ -37,6 +38,7 @@
     echo CHtml::submitButton(gT('Save'));
     echo CHtml::endForm();
     
+    $this->endWidget();
 ?>
 <script type="text/javascript">
     $(document).ready(function() {

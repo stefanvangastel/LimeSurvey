@@ -147,11 +147,7 @@
             {
                 $out .= CHtml::label($metaData['label'], $id);
             }
-            $out .= CHtml::radioButtonList($id, $value, array(
-                0 => 'False',
-                1 => 'True'
-            ), array('id' => $id, 'form' => $form, 'container'=>'div', 'separator' => ''));
-
+            $out .= CHtml::checkBox($id, false, array('id' => $id, 'form' => $form));
 
             return $out;
         }
@@ -277,7 +273,6 @@
 
         public function renderList($name, array $metaData, $form = null)
         {
-
             if (isset($metaData['label']))
             {
                 $label = CHtml::label($metaData['label'], $id, $metaData['labelOptions']);
@@ -305,6 +300,7 @@
                 
             ), true));
             echo CHtml::openTag('div', array('class' => 'settingslist'));
+                echo $label;
                 echo CHtml::openTag('table');
                     // Create header row.
                     echo CHtml::openTag('thead');

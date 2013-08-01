@@ -18,25 +18,27 @@ $(document).ready(function() {
 
         // Check if the first element contains a number value and, if so, increase it by one.
         var parts = baseRow.find('input:first').val().match(/([\d]+|[^\d]+)/g);
-        for (var i = parts.length - 1; i > 0; --i)
+        if(parts)
         {
-            var num = parseInt(parts[i]);
-            var length = parts[i].length;
-            if (num === num)
+            for (var i = parts.length - 1; i > 0; --i)
             {
-                parts[i] = (num + 1).toString();
-                while (parts[i].length < length)
+                var num = parseInt(parts[i]);
+                var length = parts[i].length;
+                if (num === num)
                 {
-                    parts[i] = '0' + parts[i];
+                    parts[i] = (num + 1).toString();
+                    while (parts[i].length < length)
+                    {
+                        parts[i] = '0' + parts[i];
+                    }
                 }
             }
+            newRow.find('input:first').val(parts.join(''));
         }
-        newRow.find('input:first').val(parts.join(''));
         baseRow.after(newRow);
         newRow.fadeIn();
-
-    }
+    };
     $('form.settingswidget .settingslist a.remove').bind('click', removeRow);
     $('form.settingswidget .settingslist a.add').bind('click', addRow);
 
-})
+});
