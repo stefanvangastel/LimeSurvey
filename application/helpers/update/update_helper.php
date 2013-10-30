@@ -18,7 +18,6 @@
 function CheckForDBUpgrades($subaction = null)
 {
     
-    $clang = Yii::app()->getController()->lang;
     $dbversionnumber = Yii::app()->getConfig('dbversionnumber');
     $currentDBVersion=GetGlobalSetting('DBVersion');
     $usertemplaterootdir = Yii::app()->getConfig('usertemplaterootdir');

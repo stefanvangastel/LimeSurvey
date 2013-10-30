@@ -4330,7 +4330,6 @@ function XSSFilterArray(&$array)
 * NOTE:  This currently only supports import of one language
 * @global type $connect
 * @global type $dbprefix
-* @global type $clang
 * @global type $timeadjust
 * @param type $sFullFilepath
 * @return type

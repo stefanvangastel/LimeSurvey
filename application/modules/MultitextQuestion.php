@@ -306,7 +306,7 @@ class MultitextQuestion extends QuestionModule
 
     public function getDataEntryView($language)
     {
-        $deaquery = "SELECT question,title FROM {{questions}} WHERE parent_qid={$this->id} AND language='{$language->getlangcode()}' ORDER BY question_order";
+        $deaquery = "SELECT question,title FROM {{questions}} WHERE parent_qid={$this->id} AND language='{Yii::app()->getLanguage()}' ORDER BY question_order";
         $dearesult = dbExecuteAssoc($deaquery);
         $dearesult = $dearesult->readAll();
 
@@ -331,7 +331,7 @@ class MultitextQuestion extends QuestionModule
     public function getPrintAnswers($language)
     {
         $qidattributes = $this->getAttributeValues();
-        $mearesult=Questions::model()->getAllRecords("parent_qid='{$this->id}' AND language='{$language->getlangcode()}'", array('question_order'));
+        $mearesult=Questions::model()->getAllRecords("parent_qid='{$this->id}' AND language='{Yii::app()->getLanguage()}'", array('question_order'));
         $output = '';
 
         foreach ($mearesult->readAll() as $mearow)
@@ -350,7 +350,7 @@ class MultitextQuestion extends QuestionModule
 
     public function getPrintPDF($language)
     {
-        $mearesult=Questions::model()->getAllRecords("parent_qid='{$this->id}' AND language='{$language->getlangcode()}'", array('question_order'));
+        $mearesult=Questions::model()->getAllRecords("parent_qid='{$this->id}' AND language='{Yii::app()->getLanguage()}'", array('question_order'));
 
         $output = array();
         foreach ($mearesult->readAll() as $mearow)
@@ -414,7 +414,7 @@ class MultitextQuestion extends QuestionModule
 
     public function questionProperties($prop = false)
     {
-        $clang=Yii::app()->lang;
+        
         $props=array('description' => gT("Multiple Short Text"),'group' => gT("Text questions"),'subquestions' => 1,'class' => 'multiple-short-txt','hasdefaultvalues' => 1,'assessable' => 0,'answerscales' => 0,'enum' => 0);
         return $prop?$props[$prop]:$props;
     }

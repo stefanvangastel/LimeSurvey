@@ -100,7 +100,7 @@ class OptinController extends LSYii_Controller {
         {
             $sTemplate=getTemplatePath($aSurveyInfo['templatedir']);
         }
-        $this->_renderHtml($sHTML,$sTemplate,$clang);
+        $this->_renderHtml($sHTML,$sTemplate);
     }
     /**
     * put your comment there...

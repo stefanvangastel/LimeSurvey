@@ -4,7 +4,7 @@ class ListQuestion extends QuestionModule
     public function getAnswerHTML()
     {
         global $thissurvey;
-        $clang=Yii::app()->lang;
+        
         if ($thissurvey['nokeyboard']=='Y')
         {
             includeKeypad();
@@ -317,7 +317,7 @@ class ListQuestion extends QuestionModule
 
     public function getTitle()
     {
-        $clang=Yii::app()->lang;
+        
         $aQuestionAttributes=$this->getAttributeValues();
         if ($aQuestionAttributes['hide_tip']==0)
         {
@@ -329,7 +329,7 @@ class ListQuestion extends QuestionModule
 
     public function getHelp()
     {
-        $clang=Yii::app()->lang;
+        
         $aQuestionAttributes=$this->getAttributeValues();
         if ($aQuestionAttributes['hide_tip']==0)
         {
@@ -484,7 +484,7 @@ class ListQuestion extends QuestionModule
                     $othertext = trim($_qattr['other_replace_text']);
                 }
                 else {
-                    $clang=Yii::app()->lang;
+                    
                     $othertext = gT('Other:');
                 }
                 $ansArray['0~-oth-'] = '0|' . $othertext;
@@ -640,7 +640,7 @@ class ListQuestion extends QuestionModule
 
     public function getMandatoryTip()
     {
-        $clang=Yii::app()->lang;
+        
         if ($this->isother == 'Y')
         {
             $attributes = $this->getAttributeValues();
@@ -709,7 +709,7 @@ class ListQuestion extends QuestionModule
 
     public function getDataEntryView($language)
     {
-        $deaquery = "SELECT * FROM {{answers}} WHERE qid={$this->id} AND language='{$language->getlangcode()}' ORDER BY sortorder, answer";
+        $deaquery = "SELECT * FROM {{answers}} WHERE qid={$this->id} AND language='{Yii::app()->getLanguage()}' ORDER BY sortorder, answer";
         $dearesult = dbExecuteAssoc($deaquery);
         $datatemp='';
 
@@ -758,7 +758,7 @@ class ListQuestion extends QuestionModule
             }
         }
 
-        $oquery="SELECT other FROM {{questions}} WHERE qid={$this->id} AND language='{$language->getlangcode()}'";
+        $oquery="SELECT other FROM {{questions}} WHERE qid={$this->id} AND language='{Yii::app()->getLanguage()}'";
         $oresult=dbExecuteAssoc($oquery) or safeDie("Couldn't get other for list question<br />");
         foreach($oresult->readAll() as $orow)
         {
@@ -798,7 +798,7 @@ class ListQuestion extends QuestionModule
             $optCategorySeparator = $qidattributes['category_separator'];
         }
 
-        $dearesult=Answers::model()->getAllRecords(" qid='{$this->id}' AND language='{$language->getlangcode()}' ", array('sortorder','answer'));
+        $dearesult=Answers::model()->getAllRecords(" qid='{$this->id}' AND language='{Yii::app()->getLanguage()}' ", array('sortorder','answer'));
 
         $deacount=$dearesult->getRowCount();
         if ($this->isother == "Y") {$deacount++;}
@@ -848,11 +848,11 @@ class ListQuestion extends QuestionModule
         }
         if ($this->isother == 'Y')
         {
-            if(trim($qidattributes["other_replace_text"][$language->getlangcode()])=='')
-                $qidattributes["other_replace_text"][$language->getlangcode()]="Other";
+            if(trim($qidattributes["other_replace_text"][Yii::app()->getLanguage()])=='')
+                $qidattributes["other_replace_text"][Yii::app()->getLanguage()]="Other";
             $output .= $wrapper['item-start-other'];
-            $output .= printablesurvey::input_type_image('radio',$language->gT($qidattributes["other_replace_text"][$language->getlangcode()]));
-            $output .= ' '.$language->gT($qidattributes["other_replace_text"][$language->getlangcode()]);
+            $output .= printablesurvey::input_type_image('radio',$language->gT($qidattributes["other_replace_text"][Yii::app()->getLanguage()]));
+            $output .= ' '.$language->gT($qidattributes["other_replace_text"][Yii::app()->getLanguage()]);
             $output .= (Yii::app()->getConfig('showsgqacode') ? " (-oth-)" : '') ."\n\t\t\t";
             $output .= printablesurvey::input_type_image('other');
             $output .= Yii::app()->getConfig('showsgqacode') ? " (".$this->surveyid."X".$this->gid."X".$this->id."other)" : '';
@@ -865,7 +865,7 @@ class ListQuestion extends QuestionModule
     {
         $qidattributes = $this->getAttributeValues();
 
-        $dearesult=Answers::model()->getAllRecords(" qid='{$this->id}' AND language='{$language->getlangcode()}' ", array('sortorder','answer'));
+        $dearesult=Answers::model()->getAllRecords(" qid='{$this->id}' AND language='{Yii::app()->getLanguage()}' ", array('sortorder','answer'));
 
         $output = array();
 
@@ -875,7 +875,7 @@ class ListQuestion extends QuestionModule
         }
         if ($this->isother == 'Y')
         {
-            $output[] = " o ".$language->gT($qidattributes["other_replace_text"][$language->getlangcode()]).": ________";
+            $output[] = " o ".$language->gT($qidattributes["other_replace_text"][Yii::app()->getLanguage()]).": ________";
         }
         return $output;
     }
@@ -928,7 +928,7 @@ class ListQuestion extends QuestionModule
 
     public function questionProperties($prop = false)
     {
-        $clang=Yii::app()->lang;
+        
         $props=array('description' => gT("List (Radio)"),'group' => gT("Single choice questions"),'subquestions' => 0,'class' => 'list-radio','hasdefaultvalues' => 1,'assessable' => 1,'answerscales' => 1,'enum' => 1);
         return $prop?$props[$prop]:$props;
     }

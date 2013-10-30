@@ -627,7 +627,7 @@ class NumberArrayQuestion extends ArrayQuestion
 
     public function getMandatoryTip()
     {
-        $clang=Yii::app()->lang;
+        
         $attributes = $this->getAttributeValues();
         if ($attributes['multiflexible_checkbox'] == 1)
         {
@@ -642,7 +642,7 @@ class NumberArrayQuestion extends ArrayQuestion
 
     public function mandatoryViolation($relevantSQs, $unansweredSQs, $subsqs, $sgqas)
     {
-        $clang=Yii::app()->lang;
+        
         $attributes = $this->getAttributeValues();
         if ($attributes['multiflexible_checkbox'] == 1)
         {
@@ -717,10 +717,10 @@ class NumberArrayQuestion extends ArrayQuestion
             $stepvalue=1;
         }
 
-        $lquery = "SELECT question, title FROM {{questions}} WHERE parent_qid={$this->id} and scale_id=1 and language='{$language->getlangcode()}' ORDER BY question_order";
+        $lquery = "SELECT question, title FROM {{questions}} WHERE parent_qid={$this->id} and scale_id=1 and language='{Yii::app()->getLanguage()}' ORDER BY question_order";
         $lresult=dbExecuteAssoc($lquery)->readAll() or die ("Couldn't get labels, Type \":\"<br />$lquery<br />");
 
-        $meaquery = "SELECT question, title FROM {{questions}} WHERE parent_qid={$this->id} and scale_id=0 and language='{$language->getlangcode()}' ORDER BY question_order";
+        $meaquery = "SELECT question, title FROM {{questions}} WHERE parent_qid={$this->id} and scale_id=0 and language='{Yii::app()->getLanguage()}' ORDER BY question_order";
         $mearesult=dbExecuteAssoc($meaquery)->readAll() or die ("Couldn't get answers, Type \":\"<br />$meaquery<br />");
         $output = "<table>";
         $output .= "<tr><td></td>";
@@ -803,10 +803,10 @@ class NumberArrayQuestion extends ArrayQuestion
         } else {
             $checkboxlayout=false;
         }
-        $mearesult=Questions::model()->getAllRecords(" parent_qid='{$this->id}' and scale_id=0 AND language='{$language->getlangcode()}' ", array('question_order'));
+        $mearesult=Questions::model()->getAllRecords(" parent_qid='{$this->id}' and scale_id=0 AND language='{Yii::app()->getLanguage()}' ", array('question_order'));
 
         $output = "\n<table>\n\t<thead>\n\t\t<tr>\n\t\t\t<td>&nbsp;</td>\n";
-        $fresult=Questions::model()->getAllRecords(" parent_qid='{$this->id}' and scale_id=1 AND language='{$language->getlangcode()}' ", array('question_order'));
+        $fresult=Questions::model()->getAllRecords(" parent_qid='{$this->id}' and scale_id=1 AND language='{Yii::app()->getLanguage()}' ", array('question_order'));
 
         $fcount = $fresult->getRowCount();
         $i=0;
@@ -871,9 +871,9 @@ class NumberArrayQuestion extends ArrayQuestion
         } else {
             $checkboxlayout=false;
         }
-        $mearesult=Questions::model()->getAllRecords(" parent_qid='{$this->id}' and scale_id=0 AND language='{$language->getlangcode()}' ", array('question_order'));
+        $mearesult=Questions::model()->getAllRecords(" parent_qid='{$this->id}' and scale_id=0 AND language='{Yii::app()->getLanguage()}' ", array('question_order'));
 
-        $fresult=Questions::model()->getAllRecords(" parent_qid='{$this->id}' and scale_id=1 AND language='{$language->getlangcode()}' ", array('question_order'));
+        $fresult=Questions::model()->getAllRecords(" parent_qid='{$this->id}' and scale_id=1 AND language='{Yii::app()->getLanguage()}' ", array('question_order'));
         $fcount = $fresult->getRowCount();
 
         $i=0;
@@ -1027,7 +1027,7 @@ class NumberArrayQuestion extends ArrayQuestion
 
     public function questionProperties($prop = false)
     {
-        $clang=Yii::app()->lang;
+        
         $props=array('description' => gT("Array (Numbers)"),'group' => gT('Arrays'),'subquestions' => 2,'class' => 'array-multi-flexi','hasdefaultvalues' => 0,'assessable' => 1,'answerscales' => 0,'enum' => 0);
         return $prop?$props[$prop]:$props;
     }

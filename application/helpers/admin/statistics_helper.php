@@ -37,15 +37,13 @@
  *  @param mixed $cache          An object containing [Hashkey] and [CacheFolder]
  *  @return                Name
  */
-function createChart($iQuestionID, $iSurveyID, $type = null, $lbl, $gdata, $grawdata, $cache, $oLanguage) {
+function createChart($iQuestionID, $iSurveyID, $type = null, $lbl, $gdata, $grawdata, $cache) {
     $rootdir = Yii::app()->getConfig("rootdir");
     $homeurl = Yii::app()->getConfig("homeurl");
     $admintheme = Yii::app()->getConfig("admintheme");
     $chartfontfile = Yii::app()->getConfig("chartfontfile");
     $chartfontsize = Yii::app()->getConfig("chartfontsize");
     $alternatechartfontfile = Yii::app()->getConfig("alternatechartfontfile");
-    $language = $oLanguage->langcode;
-    $clang = $oLanguage;
     $cachefilename = "";
 
     /* Set the fonts for the chart */

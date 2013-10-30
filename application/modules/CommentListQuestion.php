@@ -4,7 +4,7 @@ class CommentListQuestion extends ListQuestion
     public function getAnswerHTML()
     {
         global $maxoptionsize, $thissurvey;
-        $clang=Yii::app()->lang;
+        
 
         if ($thissurvey['nokeyboard']=='Y')
         {
@@ -366,7 +366,7 @@ class CommentListQuestion extends ListQuestion
 
     public function getDataEntryView($language)
     {
-        $deaquery = "SELECT * FROM {{answers}} WHERE qid={$this->id} AND language='{$language->getlangcode()}' ORDER BY sortorder, answer";
+        $deaquery = "SELECT * FROM {{answers}} WHERE qid={$this->id} AND language='{Yii::app()->getLanguage()}' ORDER BY sortorder, answer";
         $dearesult = dbExecuteAssoc($deaquery);
         $datatemp='';
 
@@ -387,7 +387,7 @@ class CommentListQuestion extends ListQuestion
 
     public function getPrintAnswers($language)
     {
-        $dearesult=Answers::model()->getAllRecords(" qid='{$this->id}' AND language='{$language->getlangcode()}' ", array('sortorder','answer'));
+        $dearesult=Answers::model()->getAllRecords(" qid='{$this->id}' AND language='{Yii::app()->getLanguage()}' ", array('sortorder','answer'));
 
         $output = "\t<ul>\n";
         foreach ($dearesult->readAll() as $dearow)
@@ -407,7 +407,7 @@ class CommentListQuestion extends ListQuestion
 
     public function getPrintPDF($language)
     {
-        $dearesult=Answers::model()->getAllRecords(" qid='{$this->id}' AND language='{$language->getlangcode()}' ", array('sortorder','answer'));
+        $dearesult=Answers::model()->getAllRecords(" qid='{$this->id}' AND language='{Yii::app()->getLanguage()}' ", array('sortorder','answer'));
 
         $output = array();
 
@@ -434,7 +434,7 @@ class CommentListQuestion extends ListQuestion
 
     public function questionProperties($prop = false)
     {
-        $clang=Yii::app()->lang;
+        
         $props=array('description' => gT("List with comment"),'group' => gT("Single choice questions"),'subquestions' => 0,'class' => 'list-with-comment','hasdefaultvalues' => 1,'assessable' => 1,'answerscales' => 1,'enum' => 1);
         return $prop?$props[$prop]:$props;
     }

@@ -34,16 +34,16 @@ class participantsaction extends Survey_Common_Action
      */
     private function _loadjqGrid($sScript = '', $aData = array())
     {
-        $this->getController()->_js_admin_includes(Yii::app()->getConfig('generalscripts')  . 'jquery/jqGrid/js/i18n/grid.locale-en.js');
-        $this->getController()->_js_admin_includes(Yii::app()->getConfig('generalscripts')  . 'jquery/jqGrid/js/jquery.jqGrid.min.js');
-        $this->getController()->_js_admin_includes(Yii::app()->getConfig('generalscripts')  . 'jquery/jqGrid/plugins/jquery.searchFilter.js');
-        $this->getController()->_js_admin_includes(Yii::app()->getConfig('generalscripts')  . 'jquery/jqGrid/src/grid.celledit.js');
-        $this->getController()->_css_admin_includes(Yii::app()->getConfig('generalscripts') . 'jquery/jqGrid/css/ui.jqgrid.css');
-        $this->getController()->_css_admin_includes(Yii::app()->getConfig('generalscripts') . 'jquery/jqGrid/css/jquery.ui.datepicker.css');
+        App()->getClientScript()->registerScriptFile(Yii::app()->getConfig('generalscripts')  . 'jquery/jqGrid/js/i18n/grid.locale-en.js');
+        App()->getClientScript()->registerScriptFile(Yii::app()->getConfig('generalscripts')  . 'jquery/jqGrid/js/jquery.jqGrid.min.js');
+        App()->getClientScript()->registerScriptFile(Yii::app()->getConfig('generalscripts')  . 'jquery/jqGrid/plugins/jquery.searchFilter.js');
+        App()->getClientScript()->registerScriptFile(Yii::app()->getConfig('generalscripts')  . 'jquery/jqGrid/src/grid.celledit.js');
+        App()->getClientScript()->registerCssFile(Yii::app()->getConfig('generalscripts') . 'jquery/jqGrid/css/ui.jqgrid.css');
+        App()->getClientScript()->registerCssFile(Yii::app()->getConfig('generalscripts') . 'jquery/jqGrid/css/jquery.ui.datepicker.css');
         
         if (!empty($sScript))
         {
-            $this->getController()->_js_admin_includes(Yii::app()->getConfig('adminscripts') . $sScript . '.js');
+            App()->getClientScript()->registerScriptFile(Yii::app()->getConfig('adminscripts') . $sScript . '.js');
             $this->_renderWrappedTemplate('participants', array('participantsPanel', $sScript), $aData);
         }
     }
@@ -123,7 +123,7 @@ class participantsaction extends Survey_Common_Action
      */
     protected function csvExportCount($search = null)
     {
-        $clang = $this->getController()->lang;
+        
         
         $attid = ParticipantAttributeNames::model()->getVisibleAttributes();
         
@@ -226,13 +226,13 @@ class participantsaction extends Survey_Common_Action
             'urlsearch' => $urlSearch
         );
 
-        $this->getController()->_js_admin_includes(Yii::app()->getConfig('generalscripts')  . 'jquery/jqGrid/js/i18n/grid.locale-en.js');
-        $this->getController()->_js_admin_includes(Yii::app()->getConfig('generalscripts')  . 'jquery/jqGrid/js/jquery.jqGrid.min.js');
-        $this->getController()->_css_admin_includes(Yii::app()->getConfig('publicstyleurl') . 'jquery.multiselect.css');
-        $this->getController()->_css_admin_includes(Yii::app()->getConfig('publicstyleurl') . 'jquery.multiselect.filter.css');
-        $this->getController()->_css_admin_includes(Yii::app()->getConfig('adminstyleurl')  . 'displayParticipants.css');
-        $this->getController()->_css_admin_includes(Yii::app()->getConfig('generalscripts') . 'jquery/jqGrid/css/ui.jqgrid.css');
-        $this->getController()->_css_admin_includes(Yii::app()->getConfig('generalscripts') . 'jquery/jqGrid/css/jquery.ui.datepicker.css');
+        App()->getClientScript()->registerScriptFile(Yii::app()->getConfig('generalscripts')  . 'jquery/jqGrid/js/i18n/grid.locale-en.js');
+        App()->getClientScript()->registerScriptFile(Yii::app()->getConfig('generalscripts')  . 'jquery/jqGrid/js/jquery.jqGrid.min.js');
+        App()->getClientScript()->registerCssFile(Yii::app()->getConfig('publicstyleurl') . 'jquery.multiselect.css');
+        App()->getClientScript()->registerCssFile(Yii::app()->getConfig('publicstyleurl') . 'jquery.multiselect.filter.css');
+        App()->getClientScript()->registerCssFile(Yii::app()->getConfig('adminstyleurl')  . 'displayParticipants.css');
+        App()->getClientScript()->registerCssFile(Yii::app()->getConfig('generalscripts') . 'jquery/jqGrid/css/ui.jqgrid.css');
+        App()->getClientScript()->registerCssFile(Yii::app()->getConfig('generalscripts') . 'jquery/jqGrid/css/jquery.ui.datepicker.css');
 
         // loads the participant panel view and display participant view
         $this->_renderWrappedTemplate('participants', array('participantsPanel', 'displayParticipants'), $aData);
@@ -960,8 +960,8 @@ class participantsaction extends Survey_Common_Action
             'attributevalues' => ParticipantAttributeNames::model()->getAttributesValues($iAttributeId)
         );
 
-        $this->getController()->_css_admin_includes(Yii::app()->getConfig('adminstyleurl')       . 'participants.css');
-        $this->getController()->_css_admin_includes(Yii::app()->getConfig('adminstyleurl')       . 'viewAttribute.css');
+        App()->getClientScript()->registerCssFile(Yii::app()->getConfig('adminstyleurl')       . 'participants.css');
+        App()->getClientScript()->registerCssFile(Yii::app()->getConfig('adminstyleurl')       . 'viewAttribute.css');
 
         $this->_renderWrappedTemplate('participants', array('participantsPanel', 'viewAttribute'), $aData);
     }
@@ -1066,7 +1066,7 @@ class participantsaction extends Survey_Common_Action
         $config['allowed_types'] = 'text/x-csv|text/plain|application/octet-stream|csv';
         $config['max_size'] = '1000';
 
-        $clang = $this->getController()->lang;
+        
         $sFilePath = preg_replace('/\\\/', '/', Yii::app()->getConfig('tempdir')) . "/" . $_FILES['the_file']['name'];
         $bMoveFileResult = @move_uploaded_file($_FILES['the_file']['tmp_name'], $sFilePath);
         $errorinupload = '';
@@ -1371,7 +1371,7 @@ class participantsaction extends Survey_Common_Action
         }
 
         unlink($sFilePath);
-        $clang = $this->getController()->lang;
+        
         $aData = array();
         
         $aData['recordcount'] = $recordcount - 1;
@@ -1426,7 +1426,7 @@ class participantsaction extends Survey_Common_Action
      */
     function shareParticipants()
     {
-        $clang = $this->getController()->lang;
+        
         $iParticipantId = Yii::app()->request->getPost('participantid');
         $iShareUserId = Yii::app()->request->getPost('shareuser');
         $bCanEdit = Yii::app()->request->getPost('can_edit');
@@ -1461,7 +1461,7 @@ class participantsaction extends Survey_Common_Action
         $createautomap = Yii::app()->request->getPost('createautomap');
 
         $response = Participants::model()->copyToCentral(Yii::app()->request->getPost('surveyid'), $newarr, $mapped, $overwriteauto, $overwriteman, $createautomap);
-        $clang = $this->getController()->lang;
+        
 
         printf(gT("%s participants have been copied to the central participants table"), $response['success']);
         if($response['duplicate'] > 0) {
@@ -1485,7 +1485,7 @@ class participantsaction extends Survey_Common_Action
                                                          ->getPost('surveyid'), Yii::app()
                                                          ->request->getPost('attributeid')
                                                );
-        $clang = $this->getController()->lang;
+        
 
         printf(gT("%s participants have been copied to the survey token table"), $response['success']);
         if($response['duplicate']>0) {
@@ -1512,7 +1512,7 @@ class participantsaction extends Survey_Common_Action
         $overwritest = Yii::app()->request->getPost('overwritest');
         $createautomap = Yii::app()->request->getPost('createautomap');
 
-        $clang = $this->getController()->lang;
+        
         if (empty($newcreate[0])) { $newcreate = array(); }
 
         $response = Participants::model()->copytosurveyatt($iSurveyId, $mapped, $newcreate, $iParticipantId, $overwriteauto, $overwriteman, $overwritest, $createautomap);
@@ -1534,8 +1534,8 @@ class participantsaction extends Survey_Common_Action
     function attributeMap()
     {
         Yii::app()->loadHelper('common');
-        $this->getController()->_js_admin_includes(Yii::app()->getConfig('adminscripts') . "attributeMap.js");
-        $this->getController()->_css_admin_includes(Yii::app()->getConfig('adminstyleurl') ."attributeMap.css");
+        App()->getClientScript()->registerScriptFile(Yii::app()->getConfig('adminscripts') . "attributeMap.js");
+        App()->getClientScript()->registerCssFile(Yii::app()->getConfig('adminstyleurl') ."attributeMap.css");
 
         $iSurveyId = Yii::app()->request->getPost('survey_id');
         $redirect = Yii::app()->request->getPost('redirect');
@@ -1610,8 +1610,8 @@ class participantsaction extends Survey_Common_Action
     function attributeMapToken()
     {
         Yii::app()->loadHelper('common');
-        $this->getController()->_js_admin_includes(Yii::app()->getConfig('adminscripts') . "attributeMapToken.js");
-        $this->getController()->_css_admin_includes(Yii::app()->getConfig('adminstyleurl') ."attributeMapToken.css");
+        App()->getClientScript()->registerScriptFile(Yii::app()->getConfig('adminscripts') . "attributeMapToken.js");
+        App()->getClientScript()->registerCssFile(Yii::app()->getConfig('adminstyleurl') ."attributeMapToken.css");
 
         $iSurveyId = Yii::app()->request->getQuery('sid');
         $attributes = ParticipantAttributeNames::model()->getAttributes();

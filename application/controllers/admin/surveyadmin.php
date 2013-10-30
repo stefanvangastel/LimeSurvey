@@ -64,7 +64,7 @@ class SurveyAdmin extends Survey_Common_Action
     {
         if (hasSurveyPermission($iSurveyID, 'surveycontent', 'update'))
         {
-            $clang = $this->getController()->lang;
+            
 
             //Automatically renumbers the "question codes" so that they follow
             //a methodical numbering method
@@ -170,7 +170,7 @@ class SurveyAdmin extends Survey_Common_Action
 
         //Yii::app()->loadHelper('text');
         Yii::app()->loadHelper('surveytranslator');
-        $clang = $this->getController()->lang;
+        
 
         Yii::app()->session['FileManagerContext'] = "edit:survey:{$iSurveyID}";
         Yii::app()->loadHelper('/admin/htmleditor');
@@ -202,7 +202,7 @@ class SurveyAdmin extends Survey_Common_Action
     */
     function importsurveyresources()
     {
-        $clang = $this->getController()->lang;
+        
         $iSurveyID = Yii::app()->request->getPost('surveyid');
 
         if (!empty($iSurveyID))
@@ -312,7 +312,7 @@ class SurveyAdmin extends Survey_Common_Action
     {
         $iSurveyID = Yii::app()->request->getPost('sid', $iSurveyID);
         $iSurveyID = sanitize_int($iSurveyID);
-        $clang = $this->getController()->lang;
+        
         $date = date('YmdHis'); //'His' adds 24hours+minutes to name to allow multiple deactiviations in a day
 
         if (empty($_POST['ok']))
@@ -589,7 +589,7 @@ class SurveyAdmin extends Survey_Common_Action
     public function getSurveys_json()
     {
         $this->getController()->loadHelper('surveytranslator');
-        $clang = $this->getController()->lang;
+        
         $dateformatdetails = getDateFormatData(Yii::app()->session['dateformat']);
 
         $surveys = Survey::model();
@@ -731,7 +731,7 @@ class SurveyAdmin extends Survey_Common_Action
     {
         $aData = $aViewUrls = array();
         $aData['surveyid'] = $iSurveyID = (int) $iSurveyID;
-        $clang = $this->getController()->lang;
+        
 
         if (hasSurveyPermission($iSurveyID, 'survey', 'delete'))
         {
@@ -781,7 +781,7 @@ class SurveyAdmin extends Survey_Common_Action
     public function editlocalsettings($iSurveyID)
     {
         $this->getController()->navData['surveyId'] = $iSurveyID;
-        $clang = $this->getController()->lang;
+        
         $aData['surveyid'] = $iSurveyID = sanitize_int($iSurveyID);
         $aViewUrls = array();
 
@@ -870,7 +870,7 @@ class SurveyAdmin extends Survey_Common_Action
             {
                 $sTransLinks = true;
             }
-            $clang = $this->getController()->lang;
+            
 
             // Start the HTML
             if ($action == 'importsurvey')
@@ -1074,8 +1074,8 @@ class SurveyAdmin extends Survey_Common_Action
         $aData['aGroupsAndQuestions'] = $aGrouplist;
         $aData['surveyid'] = $iSurveyID;
 
-        $this->getController()->_js_admin_includes(Yii::app()->getConfig('generalscripts') . 'jquery/jquery.ui.nestedSortable.js');
-        $this->getController()->_js_admin_includes(Yii::app()->getConfig('adminscripts') . 'organize.js');
+        App()->getClientScript()->registerScriptFile(Yii::app()->getConfig('generalscripts') . 'jquery/jquery.ui.nestedSortable.js');
+        App()->getClientScript()->registerScriptFile(Yii::app()->getConfig('adminscripts') . 'organize.js');
 
         $this->_renderWrappedTemplate('survey', 'organizeGroupsAndQuestions_view', $aData);
     }
@@ -1186,7 +1186,7 @@ class SurveyAdmin extends Survey_Common_Action
     */
     private function _generalTabNewSurvey()
     {
-        $clang = $this->getController()->lang;
+        
 
         //Use the current user details for the default administrator name and email for this survey
         $user=User::model()->findByPk(Yii::app()->session['loginID']);
@@ -1238,7 +1238,7 @@ class SurveyAdmin extends Survey_Common_Action
     private function _generalTabEditSurvey($iSurveyID, $esrow)
     {
         global $siteadminname, $siteadminemail;
-        $clang = $this->getController()->lang;
+        
         $aData['action'] = "editsurveysettings";
         
         $aData['esrow'] = $esrow;
@@ -1260,7 +1260,7 @@ class SurveyAdmin extends Survey_Common_Action
     */
     private function _tabPresentationNavigation($esrow)
     {
-        $clang = $this->getController()->lang;
+        
         global $showxquestions, $showgroupinfo, $showqnumcode;
 
         Yii::app()->loadHelper('globalsettings');
@@ -1284,7 +1284,7 @@ class SurveyAdmin extends Survey_Common_Action
     */
     private function _tabPublicationAccess($esrow)
     {
-        $clang = $this->getController()->lang;
+        
         $dateformatdetails = getDateFormatData(Yii::app()->session['dateformat']);
         $startdate = '';
         if ($esrow['startdate'])
@@ -1316,7 +1316,7 @@ class SurveyAdmin extends Survey_Common_Action
     */
     private function _tabNotificationDataManagement($esrow)
     {
-        $clang = $this->getController()->lang;
+        
 
         
         $aData['esrow'] = $esrow;
@@ -1332,7 +1332,7 @@ class SurveyAdmin extends Survey_Common_Action
     */
     private function _tabTokens($esrow)
     {
-        $clang = $this->getController()->lang;
+        
 
         
         $aData['esrow'] = $esrow;
@@ -1378,7 +1378,7 @@ class SurveyAdmin extends Survey_Common_Action
     */
     private function _tabResourceManagement($iSurveyID)
     {
-        $clang = $this->getController()->lang;
+        
 
         global $sCKEditorURL;
         // TAB Uploaded Resources Management
@@ -1409,7 +1409,7 @@ class SurveyAdmin extends Survey_Common_Action
         {
             die();
         }
-        $clang = $this->getController()->lang;
+        
         Yii::app()->session['flashmessage'] = gT("The survey was successfully expired by setting an expiration date in the survey settings.");
         $this->_expireSurvey($iSurveyID);
         $dExpirationdate = dateShift(date("Y-m-d H:i:s"), "Y-m-d H:i:s", Yii::app()->getConfig('timeadjust'));
@@ -1441,7 +1441,7 @@ class SurveyAdmin extends Survey_Common_Action
         where up.sid={$iSurveyID}");
         $oResult= $oResult->readAll();
         $i = 0;
-        $clang = $this->getController()->lang;
+        
         $aData = new stdClass();
         foreach ($oResult as $oRow)
         {
@@ -1514,12 +1514,12 @@ class SurveyAdmin extends Survey_Common_Action
 
         foreach ($js_files as $file)
         {
-            $this->getController()->_js_admin_includes($file);
+            App()->getClientScript()->registerScriptFile($file);
         }
 
         foreach ($css_files as $file)
         {
-            $this->getController()->_css_admin_includes($file);
+            App()->getClientScript()->registerCssFile($file);
         }
     }
 

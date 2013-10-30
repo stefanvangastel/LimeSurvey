@@ -5,7 +5,7 @@ class DateQuestion extends QuestionModule
     {
         global $thissurvey;
 
-        $clang=Yii::app()->lang;
+        
 
         $aQuestionAttributes=$this->getAttributeValues();
 
@@ -247,7 +247,7 @@ class DateQuestion extends QuestionModule
             $answer ="<p class='question answer-item text-item date-item'><label for='answer{$this->fieldname}' class='hide label'>{gT('Date picker')}</label>
             <input class='popupdate' type=\"text\" size=\"10\" name=\"{$this->fieldname}\" title='".sprintf(gT('Format: %s'),$dateformatdetails['dateformat'])."' id=\"answer{$this->fieldname}\" value=\"$dateoutput\" maxlength=\"10\" onkeypress=\"return goodchars(event,'".$goodchars."')\" onchange=\"$checkconditionFunction(this.value, this.name, this.type)\" />
             <input  type='hidden' name='dateformat{$this->fieldname}' id='dateformat{$this->fieldname}' value='{$dateformatdetails['jsdate']}'  />
-            <input  type='hidden' name='datelanguage{$this->fieldname}' id='datelanguage{$this->fieldname}' value='{$clang->langcode}'  />
+            <input  type='hidden' name='datelanguage{$this->fieldname}' id='datelanguage{$this->fieldname}' value='{Yii::app()->getLanguage()}'  />
             <input  type='hidden' name='dateyearrange{$this->fieldname}' id='dateyearrange{$this->fieldname}' value='{$minyear}:{$maxyear}'  />
 
             </p>";
@@ -295,15 +295,15 @@ class DateQuestion extends QuestionModule
 
     public function getHeaderIncludes()
     {
-        $clang=Yii::app()->lang;
+        
         $aQuestionAttributes=$this->getAttributeValues();
 
         $includes = array(Yii::app()->getConfig("generalscripts").'date.js' => 'js');
         if (trim($aQuestionAttributes['dropdown_dates'])==0) {
             $includes[Yii::app()->getConfig("generalscripts").'date.js'] = 'js';
-            if ($clang->langcode !== 'en')
+            if (Yii::app()->getLanguage() !== 'en')
             {
-                $includes[Yii::app()->getConfig("generalscripts").'jquery/locale/jquery.ui.datepicker-'.$clang->langcode.'.js'] = 'js';
+                $includes[Yii::app()->getConfig("generalscripts").'jquery/locale/jquery.ui.datepicker-'.Yii::app()->getLanguage().'.js'] = 'js';
             }
         }
 
@@ -408,7 +408,7 @@ class DateQuestion extends QuestionModule
 
     public function questionProperties($prop = false)
     {
-        $clang=Yii::app()->lang;
+        
         $props=array('description' => gT("Date/Time"),'group' => gT("Mask questions"),'subquestions' => 0,'class' => 'date','hasdefaultvalues' => 1,'assessable' => 0,'answerscales' => 0,'enum' => 0);
         return $prop?$props[$prop]:$props;
     }

@@ -113,7 +113,7 @@ class GlobalSettings extends Survey_Common_Action
         if (Yii::app()->session['USER_RIGHT_CONFIGURATOR'] != 1) {
             $this->getController()->redirect($this->getController()->createUrl('/admin'));
         }
-        $clang = $this->getController()->lang;
+        
         Yii::app()->loadHelper('surveytranslator');
 
         $maxemails = $_POST['maxemails'];

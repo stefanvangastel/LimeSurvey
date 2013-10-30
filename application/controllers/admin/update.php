@@ -29,7 +29,7 @@ class update extends Survey_Common_Action
         $this->_RunUpdaterUpdate();
         Yii::import('application.libraries.admin.http.httpRequestIt');
 
-        $clang = $this->getController()->lang;
+        
         $iCurrentBuildnumber = Yii::app()->getConfig("buildnumber");
         $tempdir = Yii::app()->getConfig("tempdir");
         $iDestinationBuild= getGlobalSetting("updatebuild");
@@ -137,7 +137,7 @@ class update extends Survey_Common_Action
     function step2()
     {
         
-        $clang = $this->getController()->lang;
+        
         $buildnumber = Yii::app()->getConfig("buildnumber");
         $updatebuild = getGlobalSetting("updatebuild");
         $updatekey =getGlobalSetting("updatekey");
@@ -220,7 +220,7 @@ class update extends Survey_Common_Action
 
     function step3()
     {
-        $clang = $this->getController()->lang;
+        
         $buildnumber = Yii::app()->getConfig("buildnumber");
         $tempdir = Yii::app()->getConfig("tempdir");
         $updatekey = getGlobalSetting("updatekey");
@@ -229,7 +229,7 @@ class update extends Survey_Common_Action
         $rootdir = Yii::app()->getConfig("rootdir");
         $tempdir = Yii::app()->getConfig("tempdir");
         $aDatabasetype = Yii::app()->db->getDriverName();
-        $aData = array('clang' => $clang);
+        $aData = array();
         // Request the list with changed files from the server
 
         if (!isset( Yii::app()->session['updateinfo']))
@@ -300,7 +300,7 @@ class update extends Survey_Common_Action
 
     function step4()
     {
-        $clang = $this->getController()->lang;
+        
         $buildnumber = Yii::app()->getConfig("buildnumber");
         $tempdir = Yii::app()->getConfig("tempdir");
         $updatekey = getGlobalSetting("updatekey");
@@ -426,7 +426,7 @@ class update extends Survey_Common_Action
 
     private function _RunUpdaterUpdate()
     {
-        $clang = $this->getController()->lang;
+        
         $versionnumber = Yii::app()->getConfig("versionnumber");
         $buildnumber = Yii::app()->getConfig("buildnumber");
         $tempdir = Yii::app()->getConfig("tempdir");
@@ -540,7 +540,7 @@ class update extends Survey_Common_Action
     */
     function db($continue = null)
     {
-        $clang = $this->getController()->lang;
+        
         Yii::app()->loadHelper("update/update");
         if(isset($continue) && $continue=="yes")
         {

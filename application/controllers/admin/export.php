@@ -288,7 +288,7 @@ class export extends Survey_Common_Action {
     {
         global $length_vallabel;
         $iSurveyID = sanitize_int(Yii::app()->request->getParam('sid'));
-        $clang = $this->getController()->lang; 
+         
         //for scale 1=nominal, 2=ordinal, 3=scale
 
         $filterstate = incompleteAnsFilterState();
@@ -582,7 +582,7 @@ class export extends Survey_Common_Action {
         $iSurveyID = sanitize_int(Yii::app()->request->getParam('sid'));
         $subaction = Yii::app()->request->getParam('subaction');
 
-        $clang = $this->getController()->lang;
+        
         //for scale 1=nominal, 2=ordinal, 3=scale
 
 //        $length_vallabel = '120'; // Set the max text length of Value Labels
@@ -838,7 +838,7 @@ class export extends Survey_Common_Action {
         $subaction = Yii::app()->request->getParam('subaction');
 
         //Exports all responses to a survey in special "Verified Voting" format.
-        $clang = $this->getController()->lang;
+        
 
         if ( ! hasSurveyPermission($iSurveyID, 'responses','export') )
         {
@@ -1309,7 +1309,7 @@ class export extends Survey_Common_Action {
     */
     protected function _renderWrappedTemplate($sAction = 'export', $aViewUrls = array(), $aData = array())
     {
-        $this->getController()->_css_admin_includes(Yii::app()->getConfig('adminstyleurl')."superfish.css");
+        App()->getClientScript()->registerCssFile(Yii::app()->getConfig('adminstyleurl')."superfish.css");
 
         $aData['display']['menu_bars']['gid_action'] = 'exportstructureGroup';
 

@@ -116,8 +116,6 @@ class Statistics_userController extends LSYii_Controller {
         else
             $sLanguage = Survey::model()->findByPk($iSurveyID)->language;
 
-        //set survey language for translations
-        $clang = SetSurveyLanguage($iSurveyID, $sLanguage);
 
         //Create header 
         sendCacheHeaders();

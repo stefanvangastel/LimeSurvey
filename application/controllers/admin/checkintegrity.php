@@ -85,19 +85,19 @@ class CheckIntegrity extends Survey_Common_Action
 
             // TMSW Conditions->Relevance:  Update this to process relevance instead
             if (isset($aDelete['conditions'])) {
-                $aData = $this->_deleteConditions($aDelete['conditions'], $aData, $clang);
+                $aData = $this->_deleteConditions($aDelete['conditions'], $aData);
             }
 
             if (isset($aDelete['questionattributes'])) {
-                $aData = $this->_deleteQuestionAttributes($aDelete['questionattributes'], $aData, $clang);
+                $aData = $this->_deleteQuestionAttributes($aDelete['questionattributes'], $aData);
             }
 
             if ($aDelete['defaultvalues']) {
-                $aData = $this->_deleteDefaultValues($aData, $clang);
+                $aData = $this->_deleteDefaultValues($aData);
             }
 
             if ($aDelete['quotas']) {
-                $aData = $this->_deleteQuotas($aData, $clang);
+                $aData = $this->_deleteQuotas($aData);
             }
 
             if ($aDelete['quotals']) {
@@ -105,40 +105,40 @@ class CheckIntegrity extends Survey_Common_Action
             }
 
             if ($aDelete['quotamembers']) {
-                $aData = $this->_deleteQuotaMembers($aData, $clang);
+                $aData = $this->_deleteQuotaMembers($aData);
             }
 
             if (isset($aDelete['assessments'])) {
-                $aData = $this->_deleteAssessments($aDelete['assessments'], $aData, $clang);
+                $aData = $this->_deleteAssessments($aDelete['assessments'], $aData);
             }
 
             if (isset($aDelete['answers'])) {
-                $aData = $this->_deleteAnswers($aDelete['answers'], $aData, $clang);
+                $aData = $this->_deleteAnswers($aDelete['answers'], $aData);
             }
 
             if (isset($aDelete['surveys'])) {
-                $aData = $this->_deleteSurveys($aDelete['surveys'], $aData, $clang);
+                $aData = $this->_deleteSurveys($aDelete['surveys'], $aData);
             }
 
             if (isset($aDelete['surveylanguagesettings'])) {
-                $aData = $this->_deleteSurveyLanguageSettings($aDelete['surveylanguagesettings'], $aData, $clang);
+                $aData = $this->_deleteSurveyLanguageSettings($aDelete['surveylanguagesettings'], $aData);
             }
 
             if (isset($aDelete['questions'])) {
-                $aData = $this->_deleteQuestions($aDelete['questions'], $aData, $clang);
+                $aData = $this->_deleteQuestions($aDelete['questions'], $aData);
             }
 
 
             if (isset($aDelete['groups'])) {
-                $aData = $this->_deleteGroups($aDelete['groups'], $aData, $clang);
+                $aData = $this->_deleteGroups($aDelete['groups'], $aData);
             }
 
             if (isset($aDelete['orphansurveytables'])) {
-                $aData = $this->_dropOrphanSurveyTables($aDelete['orphansurveytables'], $aData, $clang);
+                $aData = $this->_dropOrphanSurveyTables($aDelete['orphansurveytables'], $aData);
             }
 
             if (isset($aDelete['orphantokentables'])) {
-                $aData = $this->_deleteOrphanTokenTables($aDelete['orphantokentables'], $aData, $clang);
+                $aData = $this->_deleteOrphanTokenTables($aDelete['orphantokentables'], $aData);
             }
 
             $this->_renderWrappedTemplate('checkintegrity', 'fix_view', $aData);

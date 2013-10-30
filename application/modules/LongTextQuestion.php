@@ -7,7 +7,7 @@ class LongTextQuestion extends TextQuestion
         $extraclass ="";
 
 
-        $clang=Yii::app()->lang;
+        
 
         if ($thissurvey['nokeyboard']=='Y')
         {
@@ -104,14 +104,14 @@ class LongTextQuestion extends TextQuestion
             $tiwidth = 40;
         }
 
-        if (isset($qidattributes['prefix']) && trim($qidattributes['prefix'][$language->getlangcode()]) != '') {
-            $prefix = $qidattributes['prefix'][$language->getlangcode()];
+        if (isset($qidattributes['prefix']) && trim($qidattributes['prefix'][Yii::app()->getLanguage()]) != '') {
+            $prefix = $qidattributes['prefix'][Yii::app()->getLanguage()];
         } else {
             $prefix = '';
         }
 
-        if (isset($qidattributes['suffix']) && trim($qidattributes['suffix'][$language->getlangcode()]) != '') {
-            $suffix = $qidattributes['suffix'][$language->getlangcode()];
+        if (isset($qidattributes['suffix']) && trim($qidattributes['suffix'][Yii::app()->getLanguage()]) != '') {
+            $suffix = $qidattributes['suffix'][Yii::app()->getLanguage()];
         } else {
             $suffix = '';
         }
@@ -150,7 +150,7 @@ class LongTextQuestion extends TextQuestion
 
     public function questionProperties($prop = false)
     {
-        $clang=Yii::app()->lang;
+        
         $props=array('description' => gT("Long Free Text"),'group' => gT("Text questions"),'subquestions' => 0,'class' => 'text-long','hasdefaultvalues' => 1,'assessable' => 0,'answerscales' => 0,'enum' => 0);
         return $prop?$props[$prop]:$props;
     }

@@ -28,7 +28,7 @@ class conditionsaction extends Survey_Common_Action {
         $gid = sanitize_int($gid);
         $qid = sanitize_int($qid);
 
-        $clang = $this->getController()->lang;
+        
         $imageurl = Yii::app()->getConfig("adminimageurl");
         Yii::app()->loadHelper("database");
 
@@ -135,7 +135,7 @@ class conditionsaction extends Survey_Common_Action {
         if (isset($p_subaction) && $p_subaction == "resetsurveylogic")
         {
 
-            $clang = $this->getController()->lang;
+            
             $resetsurveylogicoutput = $br;
             $resetsurveylogicoutput .= CHtml::openTag('table', array('class'=>'alertbox'));
             $resetsurveylogicoutput .= CHtml::openTag('tr').CHtml::openTag('td', array('colspan'=>'2'));
@@ -767,7 +767,7 @@ class conditionsaction extends Survey_Common_Action {
 
         //END: PREPARE JAVASCRIPT TO SHOW MATCHING ANSWERS TO SELECTED QUESTION
 
-        $this->getController()->_css_admin_includes(Yii::app()->getConfig("publicstyleurl").'jquery.multiselect.css');
+        App()->getClientScript()->registerCssFile(Yii::app()->getConfig("publicstyleurl").'jquery.multiselect.css');
 
         $aViewUrls = array();
 
@@ -825,7 +825,7 @@ class conditionsaction extends Survey_Common_Action {
             {
 
                 //self::_js_admin_includes($this->config->item("generalscripts").'jquery/jquery.checkgroup.js');
-                $this->getController()->_js_admin_includes(Yii::app()->getConfig("generalscripts").'jquery/jquery.checkgroup.js');
+                App()->getClientScript()->registerScriptFile(Yii::app()->getConfig("generalscripts").'jquery/jquery.checkgroup.js');
                 foreach ($scenarioresult as $scenarionr)
                 {
                     $scenariotext = "";
@@ -1221,7 +1221,7 @@ class conditionsaction extends Survey_Common_Action {
             if (isset($conditionsList) && is_array($conditionsList))
             {
                 //TIBO
-                $this->getController()->_js_admin_includes(Yii::app()->getConfig("generalscripts").'jquery/jquery.multiselect.min.js');
+                App()->getClientScript()->registerScriptFile(Yii::app()->getConfig("generalscripts").'jquery/jquery.multiselect.min.js');
 
                 // TODO
                 $aViewUrls['output'] .= "<script type='text/javascript'>$(document).ready(function () { $('#copytomultiselect').multiselect( { autoOpen: true, noneSelectedText: '".gT("No questions selected")."', checkAllText: '".gT("Check all")."', uncheckAllText: '".gT("Uncheck all")."', selectedText: '# ".gT("selected")."', beforeclose: function(){ return false;},height: 200 } ); });</script>";
@@ -1530,8 +1530,8 @@ class conditionsaction extends Survey_Common_Action {
             $aViewUrls['output'] .= "</div>\n"; // end conditiontarget div
 
 
-            $this->getController()->_js_admin_includes(Yii::app()->getConfig("adminscripts").'conditions.js');
-            $this->getController()->_js_admin_includes(Yii::app()->getConfig("generalscripts").'jquery/lime-conditions-tabs.js');
+            App()->getClientScript()->registerScriptFile(Yii::app()->getConfig("adminscripts").'conditions.js');
+            App()->getClientScript()->registerScriptFile(Yii::app()->getConfig("generalscripts").'jquery/lime-conditions-tabs.js');
 
             if ($subaction == "editthiscondition" && isset($p_cid))
             {

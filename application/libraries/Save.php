@@ -58,7 +58,7 @@ class Save {
     function showsaveform()
     {
         //Show 'SAVE FORM' only when click the 'Save so far' button the first time, or when duplicate is found on SAVE FORM.
-        global $errormsg, $thissurvey, $surveyid, $clang, $clienttoken, $thisstep;
+        global $errormsg, $thissurvey, $surveyid, $clienttoken, $thisstep;
         $redata = compact(array_keys(get_defined_vars()));
         $sTemplatePath=$_SESSION['survey_'.$surveyid]['templatepath'];
         sendCacheHeaders();
@@ -108,7 +108,7 @@ class Save {
         // - "value" which is the value of the response
         //We start by generating the first 5 values which are consistent for all rows.
 
-        global $surveyid, $thissurvey, $errormsg, $publicurl, $sitename, $timeadjust, $clang, $clienttoken, $thisstep;
+        global $surveyid, $thissurvey, $errormsg, $publicurl, $sitename, $timeadjust, $clienttoken, $thisstep;
 
         //Check that the required fields have been completed.
         
@@ -200,7 +200,7 @@ class Save {
                 $message .= gT("Name").": ".$_POST['savename']."\n";
                 $message .= gT("Password").": ".$_POST['savepass']."\n\n";
                 $message .= gT("Reload your survey by clicking on the following link (or pasting it into your browser):")."\n";
-                $message .= Yii::app()->getController()->createAbsoluteUrl("/survey/index/sid/{$surveyid}/loadall/reload/scid/{$scid}/loadname/".urlencode($_POST['savename'])."/loadpass/".urlencode($_POST['savepass'])."/lang/".urlencode($clang->langcode));
+                $message .= Yii::app()->getController()->createAbsoluteUrl("/survey/index/sid/{$surveyid}/loadall/reload/scid/{$scid}/loadname/".urlencode($_POST['savename'])."/loadpass/".urlencode($_POST['savepass'])."/lang/".urlencode(Yii::app()->getLanguage()));
                 if ($clienttoken) $message .= "/token/{$clienttoken}";
 
                 $from="{$thissurvey['adminname']} <{$thissurvey['adminemail']}>";
@@ -230,7 +230,7 @@ class Save {
     */
     function savedsilent()
     {
-        global $surveyid, $thissurvey, $errormsg, $publicurl, $sitename, $timeadjust, $clang, $clienttoken, $thisstep;
+        global $surveyid, $thissurvey, $errormsg, $publicurl, $sitename, $timeadjust, $clienttoken, $thisstep;
         submitanswer();
         // Prepare email
         $tokenentryquery = 'SELECT * from {{tokens_'.$surveyid.'}} WHERE token=\''.sanitize_paranoid_string($clienttoken).'\';';

@@ -342,7 +342,7 @@ class CommentCheckQuestion extends CheckQuestion
 
     public function getDataEntryView($language)
     {
-        $meaquery = "SELECT * FROM {{questions}} WHERE parent_qid={$this->id} AND language='{$language->getlangcode()}' ORDER BY question_order, question";
+        $meaquery = "SELECT * FROM {{questions}} WHERE parent_qid={$this->id} AND language='{Yii::app()->getLanguage()}' ORDER BY question_order, question";
         $mearesult = dbExecuteAssoc($meaquery);
 
         $output = "<table border='0'>";
@@ -381,7 +381,7 @@ class CommentCheckQuestion extends CheckQuestion
 
     public function getPrintAnswers($language)
     {
-        $mearesult=Questions::model()->getAllRecords("parent_qid='{$this->id}'  AND language='{$language->getlangcode()}'", array('question_order'));
+        $mearesult=Questions::model()->getAllRecords("parent_qid='{$this->id}'  AND language='{Yii::app()->getLanguage()}'", array('question_order'));
         $fieldname = $this->surveyid . 'X' . $this->gid . 'X' . $this->id;
         $output = '';
         foreach ($mearesult->readAll() as $mearow)
@@ -404,7 +404,7 @@ class CommentCheckQuestion extends CheckQuestion
 
     public function getPrintPDF($language)
     {
-        $mearesult=Questions::model()->getAllRecords("parent_qid='{$this->id}'  AND language='{$language->getlangcode()}'", array('question_order'));
+        $mearesult=Questions::model()->getAllRecords("parent_qid='{$this->id}'  AND language='{Yii::app()->getLanguage()}'", array('question_order'));
 
         $output=array();
         $j=0;
@@ -431,7 +431,7 @@ class CommentCheckQuestion extends CheckQuestion
 
     public function questionProperties($prop = false)
     {
-        $clang=Yii::app()->lang;
+        
         $props=array('description' => gT("Multiple choice with comments"),'group' => gT("Multiple choice questions"),'subquestions' => 1,'class' => 'multiple-opt-comments','hasdefaultvalues' => 1,'assessable' => 1,'answerscales' => 0,'enum' => 1);
         return $prop?$props[$prop]:$props;
     }

@@ -332,7 +332,7 @@ class RadioArrayQuestion extends ArrayQuestion
             $output .="</td>\n";
             $scale_id=0;
             if (isset($q->scale)) $scale_id=$q->scale;
-            $fquery = "SELECT * FROM {{answers}} WHERE qid='{$q->id}' and scale_id={$scale_id} and language='$language->getlangcode()' order by sortorder, answer";
+            $fquery = "SELECT * FROM {{answers}} WHERE qid='{$q->id}' and scale_id={$scale_id} and language='Yii::app()->getLanguage()' order by sortorder, answer";
             $fresult = dbExecuteAssoc($fquery);
             $output .= "<td>\n";
             foreach ($fresult->readAll() as $frow)
@@ -458,10 +458,10 @@ class RadioArrayQuestion extends ArrayQuestion
 
     public function getDataEntryView($language)
     {
-        $meaquery = "SELECT title, question FROM {{questions}} WHERE parent_qid={$this->id} AND language='{$language->getlangcode()}' ORDER BY question_order";
+        $meaquery = "SELECT title, question FROM {{questions}} WHERE parent_qid={$this->id} AND language='{Yii::app()->getLanguage()}' ORDER BY question_order";
         $mearesult = dbExecuteAssoc($meaquery)->readAll() or safeDie ("Couldn't get answers, Type \":\"<br />$meaquery<br />");
 
-        $fquery = "SELECT * FROM {{answers}} WHERE qid={$this->id} AND language='{$language->getlangcode()}' ORDER BY sortorder, code";
+        $fquery = "SELECT * FROM {{answers}} WHERE qid={$this->id} AND language='{Yii::app()->getLanguage()}' ORDER BY sortorder, code";
         $fresult = dbExecuteAssoc($fquery)->readAll();
 
         $output = "<table>";
@@ -507,9 +507,9 @@ class RadioArrayQuestion extends ArrayQuestion
     {
         $fieldname = $this->surveyid . 'X' . $this->gid . 'X' . $this->id;
         $qidattributes = $this->getAttributeValues();
-        $mearesult=Questions::model()->getAllRecords(" parent_qid='{$this->id}'  AND language='{$language->getlangcode()}' ", array('question_order'));
+        $mearesult=Questions::model()->getAllRecords(" parent_qid='{$this->id}'  AND language='{Yii::app()->getLanguage()}' ", array('question_order'));
 
-        $fresult=Answers::model()->getAllRecords(" scale_id=0 AND qid='{$this->id}'  AND language='{$language->getlangcode()}'", array('sortorder','code'));
+        $fresult=Answers::model()->getAllRecords(" scale_id=0 AND qid='{$this->id}'  AND language='{Yii::app()->getLanguage()}'", array('sortorder','code'));
 
         $fcount = $fresult->getRowCount();
         $i=1;
@@ -595,9 +595,9 @@ class RadioArrayQuestion extends ArrayQuestion
     public function getPrintPDF($language)
     {
         $fieldname = $this->surveyid . 'X' . $this->gid . 'X' . $this->id;
-        $mearesult=Questions::model()->getAllRecords(" parent_qid='{$this->id}'  AND language='{$language->getlangcode()}' ", array('question_order'));
+        $mearesult=Questions::model()->getAllRecords(" parent_qid='{$this->id}'  AND language='{Yii::app()->getLanguage()}' ", array('question_order'));
 
-        $fresult=Answers::model()->getAllRecords(" scale_id=0 AND qid='{$this->id}'  AND language='{$language->getlangcode()}'", array('sortorder','code'));
+        $fresult=Answers::model()->getAllRecords(" scale_id=0 AND qid='{$this->id}'  AND language='{Yii::app()->getLanguage()}'", array('sortorder','code'));
         $fcount = $fresult->getRowCount();
 
         $i=1;
@@ -686,7 +686,7 @@ class RadioArrayQuestion extends ArrayQuestion
 
     public function questionProperties($prop = false)
     {
-        $clang=Yii::app()->lang;
+        
         $props=array('description' => gT("Array"),'group' => gT('Arrays'),'subquestions' => 1,'class' => 'array-flexible-row','hasdefaultvalues' => 0,'assessable' => 1,'answerscales' => 1,'enum' => 0);
         return $prop?$props[$prop]:$props;
     }

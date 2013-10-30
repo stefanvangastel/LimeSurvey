@@ -7,11 +7,14 @@
                 'localized' => true,
                 'label' => 'Question text:'
             ),
-            'help' => array(
-                'type' => 'html',
-                'localized' => true,
-                'label' => 'Help text:'
-            )
+			'list' => array(
+				'items' => array(
+					'help' => array(
+						'type' => 'html',
+						'label' => 'Help text:'
+					)
+				)
+			)
         );
         
         public static $info = array(

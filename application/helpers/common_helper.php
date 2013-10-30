@@ -4867,9 +4867,9 @@ function includeKeypad()
 {
     
     header_includes(Yii::app()->getConfig('generalscripts').'jquery/jquery.keypad.min.js');
-    if ($clang->langcode != 'en')
+    if (Yii::app()->getLanguage() != 'en_us')
     {
-        header_includes(Yii::app()->getConfig('generalscripts').'jquery/locale/jquery.ui.keypad-'.$clang->langcode.'.js');
+        header_includes(Yii::app()->getConfig('generalscripts').'jquery/locale/jquery.ui.keypad-'.Yii::app()->getLanguage().'.js');
     }
     header_includes('jquery.keypad.alt.css','css');
 }

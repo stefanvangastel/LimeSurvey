@@ -79,9 +79,9 @@ class templates extends Survey_Common_Action
     */
     public function upload()
     {
-        $clang = $this->getController()->lang;
+        
 
-//        $this->getController()->_js_admin_includes(Yii::app()->getConfig('adminscripts') . 'templates.js');
+//        App()->getClientScript()->registerScriptFile(Yii::app()->getConfig('adminscripts') . 'templates.js');
 
         $aViewUrls = $this->_initialise('default', 'welcome', 'startpage.pstpl', FALSE);
         $lid = returnGlobal('lid');
@@ -174,7 +174,7 @@ class templates extends Survey_Common_Action
 
     private function _templateFixes($templatename)
     {
-        $clang = $this->getController()->lang;
+        
         $usertemplaterootdir=Yii::app()->getConfig("usertemplaterootdir");
         $templateFixes=array();
         $templateFixes['success']=true;
@@ -219,7 +219,7 @@ class templates extends Survey_Common_Action
     */
     public function uploadfile()
     {
-        $clang = $this->getController()->lang;
+        
         $action = returnGlobal('action');
         $editfile = returnGlobal('editfile');
         $templatename = returnGlobal('templatename');
@@ -314,12 +314,12 @@ class templates extends Survey_Common_Action
     public function index($editfile = 'startpage.pstpl', $screenname = 'welcome', $templatename = 'default')
     {
         $aViewUrls = $this->_initialise($templatename, $screenname, $editfile);
-        $this->getController()->_js_admin_includes(Yii::app()->getConfig('adminscripts') . 'templates.js');
-        $this->getController()->_css_admin_includes(Yii::app()->getConfig('adminscripts') . 'codemirror_ui/lib/CodeMirror-2.0/lib/codemirror.css');
-        $this->getController()->_css_admin_includes(Yii::app()->getConfig('adminscripts') . 'codemirror_ui/lib/CodeMirror-2.0/mode/css/css.css');
-        $this->getController()->_css_admin_includes(Yii::app()->getConfig('adminscripts') . 'codemirror_ui/lib/CodeMirror-2.0/mode/javascript/javascript.css');
-        $this->getController()->_css_admin_includes(Yii::app()->getConfig('adminscripts') . 'codemirror_ui/lib/CodeMirror-2.0/mode/xml/xml.css');
-        $this->getController()->_css_admin_includes(Yii::app()->getConfig('adminscripts') . 'codemirror_ui/css/codemirror-ui.css');
+        App()->getClientScript()->registerScriptFile(Yii::app()->getConfig('adminscripts') . 'templates.js');
+        App()->getClientScript()->registerCssFile(Yii::app()->getConfig('adminscripts') . 'codemirror_ui/lib/CodeMirror-2.0/lib/codemirror.css');
+        App()->getClientScript()->registerCssFile(Yii::app()->getConfig('adminscripts') . 'codemirror_ui/lib/CodeMirror-2.0/mode/css/css.css');
+        App()->getClientScript()->registerCssFile(Yii::app()->getConfig('adminscripts') . 'codemirror_ui/lib/CodeMirror-2.0/mode/javascript/javascript.css');
+        App()->getClientScript()->registerCssFile(Yii::app()->getConfig('adminscripts') . 'codemirror_ui/lib/CodeMirror-2.0/mode/xml/xml.css');
+        App()->getClientScript()->registerCssFile(Yii::app()->getConfig('adminscripts') . 'codemirror_ui/css/codemirror-ui.css');
 
         $this->_renderWrappedTemplate('templates', $aViewUrls);
 
@@ -367,7 +367,7 @@ class templates extends Survey_Common_Action
     */
     public function templatefiledelete()
     {
-        $clang = $this->getController()->lang;
+        
         if (returnGlobal('action') == "templatefiledelete") {
             // This is where the temp file is
             $sFileToDelete=preg_replace("[^\w\s\d\.\-_~,;:\[\]\(\]]", '', returnGlobal('otherfile'));
@@ -419,7 +419,7 @@ class templates extends Survey_Common_Action
     */
     public function templatecopy()
     {
-        $clang = $this->getController()->lang;
+        
 
         if (returnGlobal('action') == "templatecopy" && returnGlobal('newname') && returnGlobal('copydir')) {
             // Copies all the files from one template directory to a new one
@@ -458,7 +458,7 @@ class templates extends Survey_Common_Action
     {
         Yii::app()->loadHelper("admin/template");
         if (is_template_editable($templatename) == true) {
-            $clang = $this->getController()->lang;
+            
 
             if (rmdirr(Yii::app()->getConfig('usertemplaterootdir') . "/" . $templatename) == true) {
                 $surveys = Survey::model()->findAllByAttributes(array('template' => $templatename));
@@ -714,7 +714,7 @@ class templates extends Survey_Common_Action
     */
     protected function _initialise($templatename, $screenname, $editfile, $showsummary = true)
     {
-        $clang = $this->getController()->lang;
+        
         Yii::app()->loadHelper('surveytranslator');
         Yii::app()->loadHelper('admin/template');
 
@@ -873,20 +873,14 @@ class templates extends Survey_Common_Action
 
         $navigator = $this->getController()->render('/admin/templates/templateeditor_navigator_view', array(
         'screenname' => $screenname,
-        'clang' => $clang,
+        
         ), true);
 
-        $completed = $this->getController()->render('/admin/templates/templateeditor_completed_view', array(
-        'clang' => $clang,
-        ), true);
+        $completed = $this->getController()->render('/admin/templates/templateeditor_completed_view', array(), true);
 
-        $assessments = $this->getController()->render('/admin/templates/templateeditor_assessments_view', array(
-        'clang' => $clang,
-        ), true);
+        $assessments = $this->getController()->render('/admin/templates/templateeditor_assessments_view', array(), true);
 
-        $printoutput = $this->getController()->render('/admin/templates/templateeditor_printoutput_view', array(
-        'clang' => $clang
-        ), true);
+        $printoutput = $this->getController()->render('/admin/templates/templateeditor_printoutput_view', array(), true);
 
         $totalquestions = '10';
         $surveyformat = 'Format';
@@ -948,7 +942,7 @@ class templates extends Survey_Common_Action
                 foreach ($Question as $qs)
                     $files[] = array("name" => $qs);
 
-                $myoutput[] = $this->getController()->render('/admin/templates/templateeditor_question_meta_view', array('clang' => $clang), true);
+                $myoutput[] = $this->getController()->render('/admin/templates/templateeditor_question_meta_view', array(), true);
                 $myoutput = array_merge($myoutput, doreplacement(getTemplatePath($templatename) . "/startpage.pstpl", $aData));
                 $myoutput = array_merge($myoutput, doreplacement(getTemplatePath($templatename) . "/survey.pstpl", $aData));
                 $myoutput = array_merge($myoutput, doreplacement(getTemplatePath($templatename) . "/startgroup.pstpl", $aData));
@@ -971,11 +965,11 @@ class templates extends Survey_Common_Action
                 );
                 $aData['question'] = $question;
 
-                $answer = $this->getController()->render('/admin/templates/templateeditor_question_answer_view', array('clang' => $clang), true);
+                $answer = $this->getController()->render('/admin/templates/templateeditor_question_answer_view', array(), true);
                 $aData['answer'] = $answer;
                 $myoutput = array_merge($myoutput, doreplacement(getTemplatePath($templatename) . "/question.pstpl", $aData));
 
-                $answer = $this->getController()->render('/admin/templates/templateeditor_question_answer_view', array('alt' => true,'clang' => $clang), true);
+                $answer = $this->getController()->render('/admin/templates/templateeditor_question_answer_view', array('alt' => true), true);
                 $aData['answer'] = $answer;
                 $question = array(
                 'all' => gT("Please explain something in detail:"),// Still in use ?
@@ -1093,7 +1087,6 @@ class templates extends Survey_Common_Action
                     'ANSWER' =>
                     $this->getController()->render('/admin/templates/templateeditor_printablesurvey_quesanswer_view', array(
                     'templateurl' => $templateurl,
-                    'clang' => $clang
                     ), true),
                     ), $aData);
                 }

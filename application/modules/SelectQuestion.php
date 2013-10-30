@@ -4,7 +4,7 @@ class SelectQuestion extends ListQuestion
     public function getAnswerHTML()
     {
 
-        $clang=Yii::app()->lang;
+        
         $answer='';
 
         $checkconditionFunction = "checkconditions";
@@ -287,7 +287,7 @@ class SelectQuestion extends ListQuestion
 
     public function questionProperties($prop = false)
     {
-        $clang=Yii::app()->lang;
+        
         $props=array('description' => gT("List (Dropdown)"),'group' => gT("Single choice questions"),'subquestions' => 0,'class' => 'list-dropdown','hasdefaultvalues' => 1,'assessable' => 1,'answerscales' => 1,'enum' => 1);
         return $prop?$props[$prop]:$props;
     }

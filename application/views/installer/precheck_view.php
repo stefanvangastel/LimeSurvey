@@ -2,7 +2,7 @@
 
 <?php
 
-function dirReport($dir, $write, $clang)
+function dirReport($dir, $write)
 {
     $error = 0;
 
@@ -80,22 +80,22 @@ function dirReport($dir, $write, $clang)
 <tr>
        <td style="width: 209px;">/application/config <?php eT("directory"); ?></td>
        <td align="center" style="width: 225px;"><?php eT("Found & writable"); ?></td>
-       <td align="center" style="width: 225px;"><?php  echo dirReport($configPresent,$configWritable,$clang); ?></td>
+       <td align="center" style="width: 225px;"><?php  echo dirReport($configPresent,$configWritable); ?></td>
 </tr>
 <tr>
        <td style="width: 209px;">/upload <?php eT("directory"); ?></td>
        <td align="center" style="width: 225px;"><?php eT("Found & writable"); ?></td>
-       <td align="center" style="width: 225px;"><?php  echo dirReport($uploaddirPresent,$uploaddirWritable,$clang); ?></td>
+       <td align="center" style="width: 225px;"><?php  echo dirReport($uploaddirPresent,$uploaddirWritable); ?></td>
 </tr>
 <tr>
        <td style="width: 209px;">/tmp <?php eT("directory"); ?></td>
        <td align="center" style="width: 225px;"><?php eT("Found & writable"); ?></td>
-       <td align="center" style="width: 225px;"><?php  echo dirReport($tmpdirPresent,$tmpdirWritable,$clang); ?></td>
+       <td align="center" style="width: 225px;"><?php  echo dirReport($tmpdirPresent,$tmpdirWritable); ?></td>
 </tr>
 <tr>
        <td style="width: 209px;">/assets <?php eT("directory"); ?></td>
        <td align="center" style="width: 225px;"><?php eT("Found & writable"); ?></td>
-       <td align="center" style="width: 225px;"><?php  echo dirReport($assetsdirPresent,$assetsdirWritable,$clang); ?></td>
+       <td align="center" style="width: 225px;"><?php  echo dirReport($assetsdirPresent,$assetsdirWritable); ?></td>
 </tr>
 <tr>
        <td style="width: 209px;"><?php eT("Session writable"); ?></td>

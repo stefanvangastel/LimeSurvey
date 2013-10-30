@@ -37,8 +37,8 @@ class surveypermission extends Survey_Common_Action {
             $aBaseSurveyPermissions=Survey_permissions::model()->getBasePermissions();
             $userList=getUserList('onlyuidarray'); // Limit the user list for the samegrouppolicy
 
-            $this->getController()->_js_admin_includes(Yii::app()->getConfig('generalscripts') . 'jquery/jquery.tablesorter.min.js');
-            $this->getController()->_js_admin_includes(Yii::app()->getConfig('adminscripts') . 'surveysecurity.js');
+            App()->getClientScript()->registerScriptFile(Yii::app()->getConfig('generalscripts') . 'jquery/jquery.tablesorter.min.js');
+            App()->getClientScript()->registerScriptFile(Yii::app()->getConfig('adminscripts') . 'surveysecurity.js');
 
             $result2 = Survey_permissions::model()->getUserDetails($surveyid);
 
@@ -397,8 +397,8 @@ class surveypermission extends Survey_Common_Action {
 
         if( hasSurveyPermission($surveyid, 'surveysecurity', 'update') )
         {
-            $this->getController()->_js_admin_includes(Yii::app()->getConfig('generalscripts') .'jquery/jquery.tablesorter.min.js');
-            $this->getController()->_js_admin_includes(Yii::app()->getConfig('adminscripts') . 'surveysecurity.js');
+            App()->getClientScript()->registerScriptFile(Yii::app()->getConfig('generalscripts') .'jquery/jquery.tablesorter.min.js');
+            App()->getClientScript()->registerScriptFile(Yii::app()->getConfig('adminscripts') . 'surveysecurity.js');
             if ($action == "setsurveysecurity")
             {
                 $query = "select users_name from {{users}} where uid=:uid";
@@ -652,7 +652,7 @@ class surveypermission extends Survey_Common_Action {
      */
     protected function _renderWrappedTemplate($sAction = 'authentication', $aViewUrls = array(), $aData = array())
     {
-        $this->getController()->_css_admin_includes(Yii::app()->getConfig('adminstyleurl')."superfish.css");
+        App()->getClientScript()->registerCssFile(Yii::app()->getConfig('adminstyleurl')."superfish.css");
         parent::_renderWrappedTemplate($sAction, $aViewUrls, $aData);
     }
 

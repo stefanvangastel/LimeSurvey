@@ -309,7 +309,7 @@ class CheckQuestion extends QuestionModule
 
     public function getTitle()
     {
-        $clang=Yii::app()->lang;
+        
         $aQuestionAttributes = $this->getAttributeValues();
         if (count($this->getChildren()) > 0 && $aQuestionAttributes['hide_tip']==0)
         {
@@ -325,7 +325,7 @@ class CheckQuestion extends QuestionModule
 
     public function getHelp()
     {
-        $clang=Yii::app()->lang;
+        
         $aQuestionAttributes = $this->getAttributeValues();
         if (count($this->getChildren()) > 0 && $aQuestionAttributes['hide_tip']==0)
         {
@@ -614,7 +614,7 @@ class CheckQuestion extends QuestionModule
     {
         if ($this->isother == 'Y')
         {
-            $clang=Yii::app()->lang;
+            
             $attributes = $this->getAttributeValues();
             if (trim($attributes['other_replace_text'][$_SESSION['survey_'.$this->surveyid]['s_lang']]) != '') {
                 $othertext = trim($qattr['other_replace_text'][$_SESSION['survey_'.$this->surveyid]['s_lang']]);
@@ -677,7 +677,7 @@ class CheckQuestion extends QuestionModule
         {
             $dcols=0;
         }
-        $meaquery = "SELECT title, question FROM {{questions}} WHERE parent_qid={$this->id} AND language='{$language->getlangcode()}' ORDER BY question_order";
+        $meaquery = "SELECT title, question FROM {{questions}} WHERE parent_qid={$this->id} AND language='{Yii::app()->getLanguage()}' ORDER BY question_order";
         $mearesult = dbExecuteAssoc($meaquery);
         $meacount = $mearesult->getRowCount();
         $fieldname="{$this->surveyid}X{$this->gid}X{$this->id}";// $this->fieldname give the last sq fieldname in dataentry
@@ -740,7 +740,7 @@ class CheckQuestion extends QuestionModule
             $dcols=0;
         }
 
-        $mearesult=Questions::model()->getAllRecords(" parent_qid='{$this->id}' AND language='{$language->getlangcode()}' ", array('question_order'));
+        $mearesult=Questions::model()->getAllRecords(" parent_qid='{$this->id}' AND language='{Yii::app()->getLanguage()}' ", array('question_order'));
         $meacount = $mearesult->getRowCount();
         if ($this->isother == 'Y') {$meacount++;}
 
@@ -772,13 +772,13 @@ class CheckQuestion extends QuestionModule
         }
         if ($this->isother == 'Y')
         {
-            if (trim($qidattributes['other_replace_text'][$language->getlangcode()])=='')
+            if (trim($qidattributes['other_replace_text'][Yii::app()->getLanguage()])=='')
             {
-                $qidattributes["other_replace_text"][$language->getlangcode()]="Other";
+                $qidattributes["other_replace_text"][Yii::app()->getLanguage()]="Other";
             }
             if(!isset($mearow['answer'])) $mearow['answer']="";
             $output.= $wrapper['item-start-other'].printablesurvey::input_type_image('checkbox',$mearow['answer']);
-            $output .= $language->gT($qidattributes["other_replace_text"][$language->getlangcode()]).":\n\t\t";
+            $output .= $language->gT($qidattributes["other_replace_text"][Yii::app()->getLanguage()]).":\n\t\t";
             $output .= printablesurvey::input_type_image('other'). (Yii::app()->getConfig('showsgqacode') ? " (".$fieldname."other) ": '').$wrapper['item-end'];
         }
         $output .= $wrapper['whole-end'];
@@ -790,7 +790,7 @@ class CheckQuestion extends QuestionModule
         $qidattributes = $this->getAttributeValues();
         $output = array();
 
-        $mearesult=Questions::model()->getAllRecords(" parent_qid='{$this->id}' AND language='{$language->getlangcode()}' ", array('question_order'));
+        $mearesult=Questions::model()->getAllRecords(" parent_qid='{$this->id}' AND language='{Yii::app()->getLanguage()}' ", array('question_order'));
 
         foreach ($mearesult->readAll() as $mearow)
         {
@@ -799,11 +799,11 @@ class CheckQuestion extends QuestionModule
         }
         if ($this->isother)
         {
-            if (trim($qidattributes['other_replace_text'][$language->getlangcode()])=='')
+            if (trim($qidattributes['other_replace_text'][Yii::app()->getLanguage()])=='')
             {
-                $qidattributes["other_replace_text"][$language->getlangcode()]="Other";
+                $qidattributes["other_replace_text"][Yii::app()->getLanguage()]="Other";
             }
-            $output[] = " o ".$language->gT($qidattributes["other_replace_text"][$language->getlangcode()]).": ________";
+            $output[] = " o ".$language->gT($qidattributes["other_replace_text"][Yii::app()->getLanguage()]).": ________";
         }
         return $output;
     }
@@ -868,7 +868,7 @@ class CheckQuestion extends QuestionModule
 
     public function questionProperties($prop = false)
     {
-        $clang=Yii::app()->lang;
+        
         $props=array('description' => gT("Multiple choice"),'group' => gT("Multiple choice questions"),'subquestions' => 1,'class' => 'multiple-opt','hasdefaultvalues' => 1,'assessable' => 1,'answerscales' => 0,'enum' => 1);
         return $prop?$props[$prop]:$props;
     }

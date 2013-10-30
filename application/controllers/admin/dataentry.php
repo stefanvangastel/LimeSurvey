@@ -96,7 +96,7 @@ class dataentry extends Survey_Common_Action
     {
         $vvoutput = '';
         $donotimport = array();
-        $clang = $this->getController()->lang;
+        
         $filePath = $this->_moveUploadedFile($aData);
         $aFileContents = $this->_readFile($filePath);
         unlink($filePath); //delete the uploaded file
@@ -246,7 +246,7 @@ class dataentry extends Survey_Common_Action
 
     private function _moveUploadedFile($aData)
     {
-        $clang = $this->getController()->lang;
+        
         $the_full_file_path = Yii::app()->getConfig('tempdir') . "/" . $_FILES['the_file']['name'];
 
         $move_uploaded_file_result = @move_uploaded_file($_FILES['the_file']['tmp_name'], $the_full_file_path);
@@ -575,7 +575,7 @@ class dataentry extends Survey_Common_Action
             'surveyid' => $surveyid,
             'subaction' => $subaction,
             'part' => 'header',
-            'clang' => $clang,
+            
             );
 
             $aViewUrls[] = 'dataentry_header_view';
@@ -730,7 +730,7 @@ class dataentry extends Survey_Common_Action
 
             $baselang = Survey::model()->findByPk($surveyid)->language;
             Yii::app()->loadHelper("database");
-            $clang = $this->getController()->lang;
+            
             $surveytable = "{{survey_".$surveyid.'}}';
 
             $aDataentryoutput = "<div class='header ui-widget-header'>".gT("Data entry")."</div>\n";
@@ -812,7 +812,6 @@ class dataentry extends Survey_Common_Action
         $aData = array(
         'surveyid' => $surveyid,
         'lang' => $lang,
-        'clang' => $clang
         );
 
         if (hasSurveyPermission($surveyid, 'responses','create'))
@@ -1385,7 +1384,7 @@ class dataentry extends Survey_Common_Action
     * This is a duplicate of the array_filter_help function in printablesurvey.php
     */
     private function _array_filter_help($qidattributes, $surveyprintlang, $surveyid) {
-        $clang = $this->getController()->lang;
+        
         $output = "";
         if(!empty($qidattributes['array_filter']))
         {

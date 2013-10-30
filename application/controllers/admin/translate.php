@@ -37,7 +37,7 @@ class translate extends Survey_Common_Action {
             return;
         }
 
-        $this->getController()->_js_admin_includes(Yii::app()->getConfig("adminscripts") . 'translation.js');
+        App()->getClientScript()->registerScriptFile(Yii::app()->getConfig("adminscripts") . 'translation.js');
 
         
         $baselang = Survey::model()->findByPk($iSurveyID)->language;
@@ -64,7 +64,6 @@ class translate extends Survey_Common_Action {
             "surveyid" => $iSurveyID,
             "survey_title" => $survey_title,
             "tolang" => $tolang,
-            "clang" => $clang,
             "adminmenu" => $this->showTranslateAdminmenu($iSurveyID, $survey_title, $tolang)
         );
         $aViewUrls['translateheader_view'][] = $aData;

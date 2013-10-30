@@ -54,14 +54,14 @@ class Assessments extends Survey_Common_Action
              $this->_delete($iSurveyID, $_POST['id']);
 
         if (hasSurveyPermission($iSurveyID, 'assessments', 'read')) {
-            $clang = $this->getController()->lang;
+            
 
             if ($iSurveyID == '') {
                 show_error(gT("No SID Provided"));
                 die();
             }
 
-            $this->_showAssessments($iSurveyID, $action, $surveyLanguage, $clang);
+            $this->_showAssessments($iSurveyID, $action, $surveyLanguage);
         }
 
     }
@@ -75,9 +75,10 @@ class Assessments extends Survey_Common_Action
      */
     protected function _renderWrappedTemplate($sAction = 'assessments', $aViewUrls = array(), $aData = array())
     {
-        $this->getController()->_js_admin_includes(Yii::app()->getConfig('adminscripts') . 'assessments.js');
-        $this->getController()->_js_admin_includes(Yii::app()->getConfig('generalscripts') . 'jquery/jquery.tablesorter.min.js');
-        $this->getController()->_css_admin_includes(Yii::app()->getConfig('adminstyleurl')."superfish.css");
+
+        App()->getClientScript()->registerScriptFile(Yii::app()->getConfig('adminscripts') . 'assessments.js');
+        App()->getClientScript()->registerScriptFile(Yii::app()->getConfig('generalscripts') . 'jquery/jquery.tablesorter.min.js');
+        App()->getClientScript()->registerCssFile(Yii::app()->getConfig('adminstyleurl')."superfish.css");
 
         parent::_renderWrappedTemplate($sAction, $aViewUrls, $aData);
     }
@@ -92,7 +93,7 @@ class Assessments extends Survey_Common_Action
         $aData['editId'] = '';
 
         if ($action == "assessmentedit" && hasSurveyPermission($iSurveyID, 'assessments', 'update')) {
-            $aData = $this->_collectEditData($surveyLanguage, $aData, $clang);
+            $aData = $this->_collectEditData($surveyLanguage, $aData);
         }
 
         $surveyinfo = getSurveyInfo($iSurveyID);

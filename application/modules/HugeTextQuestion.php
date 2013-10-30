@@ -4,7 +4,6 @@ class HugeTextQuestion extends TextQuestion
     public function getAnswerHTML()
     {
         global $thissurvey;
-        $clang =Yii::app()->lang;
         $extraclass ="";
         if ($thissurvey['nokeyboard']=='Y')
         {
@@ -100,14 +99,14 @@ class HugeTextQuestion extends TextQuestion
             $tiwidth = 50;
         }
 
-        if (isset($qidattributes['prefix']) && trim($qidattributes['prefix'][$language->getlangcode()]) != '') {
-            $prefix = $qidattributes['prefix'][$language->getlangcode()];
+        if (isset($qidattributes['prefix']) && trim($qidattributes['prefix'][Yii::app()->getLanguage()]) != '') {
+            $prefix = $qidattributes['prefix'][Yii::app()->getLanguage()];
         } else {
             $prefix = '';
         }
 
-        if (isset($qidattributes['suffix']) && trim($qidattributes['suffix'][$language->getlangcode()]) != '') {
-            $suffix = $qidattributes['suffix'][$language->getlangcode()];
+        if (isset($qidattributes['suffix']) && trim($qidattributes['suffix'][Yii::app()->getLanguage()]) != '') {
+            $suffix = $qidattributes['suffix'][Yii::app()->getLanguage()];
         } else {
             $suffix = '';
         }
@@ -146,7 +145,7 @@ class HugeTextQuestion extends TextQuestion
 
     public function questionProperties($prop = false)
     {
-        $clang=Yii::app()->lang;
+        
         $props=array('description' => gT("Huge Free Text"),'group' => gT("Text questions"),'subquestions' => 0,'class' => 'text-huge','hasdefaultvalues' => 1,'assessable' => 0,'answerscales' => 0,'enum' => 0);
         return $prop?$props[$prop]:$props;
     }

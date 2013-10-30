@@ -25,7 +25,6 @@ class UploaderController extends AdminController {
         {
             $sLanguage='';
         }
-        $clang = SetSurveyLanguage( $iSurveyID, $sLanguage);
         $sUploadDir = Yii::app()->getConfig("uploaddir");
         $sTempDir = Yii::app()->getConfig("tempdir");
 

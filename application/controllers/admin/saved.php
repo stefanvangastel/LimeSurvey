@@ -27,7 +27,7 @@ class saved extends Survey_Common_Action
     public function view($iSurveyId)
     {
         $iSurveyId = sanitize_int($iSurveyId);
-        $clang = $this->getController()->lang;
+        
         $aViewUrls = array();
 
         if (!hasSurveyPermission($iSurveyId, 'responses', 'read'))
@@ -35,8 +35,8 @@ class saved extends Survey_Common_Action
             die();
         }
 
-        $this->getController()->_js_admin_includes(Yii::app()->getConfig('generalscripts') . 'jquery/jquery.tablesorter.min.js');
-        $this->getController()->_js_admin_includes(Yii::app()->getConfig('adminscripts') . 'saved.js');
+        App()->getClientScript()->registerScriptFile(Yii::app()->getConfig('generalscripts') . 'jquery/jquery.tablesorter.min.js');
+        App()->getClientScript()->registerScriptFile(Yii::app()->getConfig('adminscripts') . 'saved.js');
 
         $aThisSurvey = getSurveyInfo($iSurveyId);
         $aData['sSurveyName'] = $aThisSurvey['name'];
@@ -52,7 +52,7 @@ class saved extends Survey_Common_Action
      */
     public function delete($iSurveyId, $iSurveyResponseId, $iSavedControlId)
     {
-        $clang = $this->getController()->lang;
+        
 
         Saved_control::model()->deleteAllByAttributes(array('scid' => $iSavedControlId, 'sid' => $iSurveyId)) or die(gT("Couldn't delete"));
         Yii::app()->db->createCommand()->delete("{{survey_".intval($iSurveyId)."}}", 'id=:id', array('id' => $iSurveyResponseId)) or die(gT("Couldn't delete"));
@@ -79,7 +79,7 @@ class saved extends Survey_Common_Action
      */
     private function _showSavedList($iSurveyId)
     {
-        $clang = $this->getController()->lang;
+        
         $aResults = Saved_control::model()->findAll(array(
             'select' => array('scid', 'srid', 'identifier', 'ip', 'saved_date', 'email', 'access_code'),
             'condition' => 'sid=:sid',

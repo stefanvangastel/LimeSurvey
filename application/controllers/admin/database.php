@@ -34,7 +34,7 @@ class database extends Survey_Common_Action
     {
 
         $action=Yii::app()->request->getPost('action');
-        $clang = $this->getController()->lang;
+        
         $databaseoutput = '';
         $surveyid = Yii::app()->request->getPost('sid');
         $gid = Yii::app()->request->getPost('gid');
@@ -227,7 +227,7 @@ class database extends Survey_Common_Action
             $q = createQuestion($resrow->question_types['class']);
             $scalecount=$q->questionProperties('subquestions');
 
-            $clang = $this->getController()->lang;
+            
             // First delete any deleted ids
             $deletedqids=explode(' ', trim(Yii::app()->request->getPost('deletedqids')));
 

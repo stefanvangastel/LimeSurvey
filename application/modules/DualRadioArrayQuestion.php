@@ -753,10 +753,10 @@ class DualRadioArrayQuestion extends RadioArrayQuestion
     public function getDataEntryView($language)
     {
         
-        $deaquery = "SELECT * FROM {{questions}} WHERE parent_qid={$this->id} AND language='{$language->getlangcode()}' ORDER BY question_order";
+        $deaquery = "SELECT * FROM {{questions}} WHERE parent_qid={$this->id} AND language='{Yii::app()->getLanguage()}' ORDER BY question_order";
         $dearesult = dbExecuteAssoc($deaquery)->readAll();
 
-        $oquery="SELECT other FROM {{questions}} WHERE qid={$this->id} AND language='{$language->getlangcode()}'";
+        $oquery="SELECT other FROM {{questions}} WHERE qid={$this->id} AND language='{Yii::app()->getLanguage()}'";
         $oresult=dbExecuteAssoc($oquery) or safeDie("Couldn't get other for list question<br />".$oquery);
         foreach($oresult->readAll() as $orow)
         {
@@ -766,7 +766,7 @@ class DualRadioArrayQuestion extends RadioArrayQuestion
         foreach ($dearesult as $dearow)
         {
             // first scale
-            $delquery = "SELECT * FROM {{answers}} WHERE qid={$this->id} AND language='{$language->getlangcode()}' and scale_id=0 ORDER BY sortorder, code";
+            $delquery = "SELECT * FROM {{answers}} WHERE qid={$this->id} AND language='{Yii::app()->getLanguage()}' and scale_id=0 ORDER BY sortorder, code";
             $delresult = dbExecuteAssoc($delquery);
             $output .= "<tr><td>{$dearow['question']}</td><td>";
             $output .= "<select name='{$this->fieldname}{$dearow['title']}#0'>";
@@ -776,7 +776,7 @@ class DualRadioArrayQuestion extends RadioArrayQuestion
                 $output .= "<option value='{$delrow['code']}'>{$delrow['answer']}</option>";
             }
             $output .= "</select></td>";
-            $delquery = "SELECT * FROM {{answers}} WHERE qid={$this->id} AND language='{$language->getlangcode()}' and scale_id=1 ORDER BY sortorder, code";
+            $delquery = "SELECT * FROM {{answers}} WHERE qid={$this->id} AND language='{Yii::app()->getLanguage()}' and scale_id=1 ORDER BY sortorder, code";
             $delresult = dbExecuteAssoc($delquery);
             $output .= "<td>";
             $output .= "<select name='{$this->fieldname}{$dearow['title']}#1'>";
@@ -800,15 +800,15 @@ class DualRadioArrayQuestion extends RadioArrayQuestion
     {
         $fieldname = $this->surveyid . 'X' . $this->gid . 'X' . $this->id;
         $qidattributes = $this->getAttributeValues();
-        $leftheader= $qidattributes['dualscale_headerA'][$language->getlangcode()];
-        $rightheader= $qidattributes['dualscale_headerB'][$language->getlangcode()];
+        $leftheader= $qidattributes['dualscale_headerA'][Yii::app()->getLanguage()];
+        $rightheader= $qidattributes['dualscale_headerB'][Yii::app()->getLanguage()];
 
-        $mearesult=Questions::model()->getAllRecords(" parent_qid={$this->id}  AND language='{$language->getlangcode()}' ", array('question_order'));
+        $mearesult=Questions::model()->getAllRecords(" parent_qid={$this->id}  AND language='{Yii::app()->getLanguage()}' ", array('question_order'));
 
         $output = "\n<table>\n\t<thead>\n";
 
 
-        $condition = "qid= '{$this->id}'  AND language= '{$language->getlangcode()}' AND scale_id=0";
+        $condition = "qid= '{$this->id}'  AND language= '{Yii::app()->getLanguage()}' AND scale_id=0";
         $fresult= Answers::model()->getAllRecords( $condition, array('sortorder', 'code'));
 
         $fcount = $fresult->getRowCount();
@@ -823,7 +823,7 @@ class DualRadioArrayQuestion extends RadioArrayQuestion
         }
         // second scale
         $printablesurveyoutput2 .="\t\t\t<td>&nbsp;</td>\n";
-        $fresult1=Answers::model()->getAllRecords(" qid='{$this->id}'  AND language='{$language->getlangcode()}' AND scale_id=1 ", array('sortorder','code'));
+        $fresult1=Answers::model()->getAllRecords(" qid='{$this->id}'  AND language='{Yii::app()->getLanguage()}' AND scale_id=1 ", array('sortorder','code'));
         $fcount1 = $fresult1->getRowCount();
         $l2=0;
 
@@ -899,7 +899,7 @@ class DualRadioArrayQuestion extends RadioArrayQuestion
 
     public function getPrintPDF($language)
     {
-        $condition = "qid= '{$this->id}'  AND language= '{$language->getlangcode()}' AND scale_id=0";
+        $condition = "qid= '{$this->id}'  AND language= '{Yii::app()->getLanguage()}' AND scale_id=0";
         $fresult= Answers::model()->getAllRecords( $condition, array('sortorder', 'code'));
 
         $pdfoutput = array();
@@ -909,7 +909,7 @@ class DualRadioArrayQuestion extends RadioArrayQuestion
             $pdfoutput[0][]=$frow['answer'];
         }
         // second scale
-        $fresult1=Answers::model()->getAllRecords(" qid='{$this->id}'  AND language='{$language->getlangcode()}' AND scale_id=1 ", array('sortorder','code'));
+        $fresult1=Answers::model()->getAllRecords(" qid='{$this->id}'  AND language='{Yii::app()->getLanguage()}' AND scale_id=1 ", array('sortorder','code'));
 
         foreach ($fresult1->readAll() as $frow1)
         {
@@ -1004,7 +1004,7 @@ class DualRadioArrayQuestion extends RadioArrayQuestion
 
     public function questionProperties($prop = false)
     {
-        $clang=Yii::app()->lang;
+        
         $props=array('description' => gT("Array dual scale"),'group' => gT('Arrays'),'subquestions' => 1,'assessable' => 1,'class' => 'array-flexible-duel-scale','hasdefaultvalues' => 0,'answerscales' => 2);
         return $prop?$props[$prop]:$props;
     }

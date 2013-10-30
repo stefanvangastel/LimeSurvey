@@ -275,7 +275,7 @@ class Survey_Common_Action extends CAction
     */
     function _questionbar($iSurveyID, $gid, $qid, $action = null)
     {
-        $clang = $this->getController()->lang;
+        
 
 
         $baselang = Survey::model()->findByPk($iSurveyID)->language;
@@ -381,7 +381,7 @@ class Survey_Common_Action extends CAction
     */
     function _questiongroupbar($iSurveyID, $gid, $qid=null, $action = null)
     {
-        $clang = $this->getController()->lang;
+        
         $baselang = Survey::model()->findByPk($iSurveyID)->language;
 
         Yii::app()->loadHelper('replacements');
@@ -445,7 +445,7 @@ class Survey_Common_Action extends CAction
     */
     function _surveybar($iSurveyID, $gid=null)
     {
-        $clang = $this->getController()->lang;
+        
         $baselang = Survey::model()->findByPk($iSurveyID)->language;
         $condition = array('sid' => $iSurveyID, 'language' => $baselang);
 
@@ -465,7 +465,7 @@ class Survey_Common_Action extends CAction
         $js_admin_includes[] = Yii::app()->getConfig('generalscripts') . 'jquery/superfish.js';
         $js_admin_includes[] = Yii::app()->getConfig('generalscripts') . 'jquery/hoverIntent.js';
         $js_admin_includes[] = Yii::app()->getConfig('adminscripts') . 'surveytoolbar.js';
-        $this->getController()->_js_admin_includes($js_admin_includes);
+        App()->getClientScript()->registerScriptFile($js_admin_includes);
 
         //Parse data to send to view
         
@@ -590,7 +590,7 @@ class Survey_Common_Action extends CAction
     */
     function _surveysummary($iSurveyID, $action=null, $gid=null)
     {
-        $clang = $this->getController()->lang;
+        
 
         $baselang = Survey::model()->findByPk($iSurveyID)->language;
         $condition = array('sid' => $iSurveyID, 'language' => $baselang);
@@ -890,7 +890,7 @@ class Survey_Common_Action extends CAction
 
     protected function _filterImportedResources($extractdir, $destdir)
     {
-        $clang = $this->getController()->lang;
+        
         $aErrorFilesInfo = array();
         $aImportedFilesInfo = array();
 

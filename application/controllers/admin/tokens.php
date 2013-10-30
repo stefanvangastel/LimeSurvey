@@ -30,7 +30,7 @@ class tokens extends Survey_Common_Action
     function index($iSurveyId)
     {
         $iSurveyId = sanitize_int($iSurveyId);
-        $clang = $this->getController()->lang;
+        
         if (!hasSurveyPermission($iSurveyId, 'tokens', 'read') && !hasSurveyPermission($iSurveyId, 'tokens', 'create') && !hasSurveyPermission($iSurveyId, 'tokens', 'update')
             && !hasSurveyPermission($iSurveyId, 'tokens', 'export') && !hasSurveyPermission($iSurveyId, 'tokens', 'import')
             && !hasSurveyPermission($iSurveyID, 'surveysettings', 'update')
@@ -72,7 +72,7 @@ class tokens extends Survey_Common_Action
     {
         // CHECK TO SEE IF A TOKEN TABLE EXISTS FOR THIS SURVEY
         $iSurveyId = sanitize_int($iSurveyId);
-        $clang = $this->getController()->lang;
+        
         $bTokenExists = tableExists('{{tokens_' . $iSurveyId . '}}');
         if (!$bTokenExists) //If no tokens table exists
         {
@@ -255,7 +255,7 @@ class tokens extends Survey_Common_Action
     */
     function browse($iSurveyId, $limit = 50, $start = 0, $order = false, $searchstring = false)
     {
-        $clang = $this->getController()->lang;
+        
         $iSurveyId = sanitize_int($iSurveyId);
         /* Check permissions */
         if (!hasSurveyPermission($iSurveyId, 'tokens', 'read'))
@@ -271,18 +271,18 @@ class tokens extends Survey_Common_Action
             self::_newtokentable($iSurveyId);
         }
         // Javascript
-        $this->getController()->_js_admin_includes(Yii::app()->getConfig('adminscripts') . "tokens.js");
-        $this->getController()->_js_admin_includes(Yii::app()->getConfig('generalscripts') . "jquery/jquery.multiselect.min.js");
-        $this->getController()->_js_admin_includes(Yii::app()->getConfig('generalscripts') . "jquery/jqGrid/js/i18n/grid.locale-en.js");
-        $this->getController()->_js_admin_includes(Yii::app()->getConfig('generalscripts') . "jquery/jqGrid/js/jquery.jqGrid.min.js");
-        $this->getController()->_js_admin_includes(Yii::app()->getConfig('generalscripts') . "jquery/jquery-ui-timepicker-addon.js");
+        App()->getClientScript()->registerScriptFile(Yii::app()->getConfig('adminscripts') . "tokens.js");
+        App()->getClientScript()->registerScriptFile(Yii::app()->getConfig('generalscripts') . "jquery/jquery.multiselect.min.js");
+        App()->getClientScript()->registerScriptFile(Yii::app()->getConfig('generalscripts') . "jquery/jqGrid/js/i18n/grid.locale-en.js");
+        App()->getClientScript()->registerScriptFile(Yii::app()->getConfig('generalscripts') . "jquery/jqGrid/js/jquery.jqGrid.min.js");
+        App()->getClientScript()->registerScriptFile(Yii::app()->getConfig('generalscripts') . "jquery/jquery-ui-timepicker-addon.js");
         // CSS
-//        $this->getController()->_css_admin_includes(Yii::app()->getConfig('generalscripts') . "jquery/css/jquery.multiselect.css");
-//        $this->getController()->_css_admin_includes(Yii::app()->getConfig('generalscripts') . "jquery/css/jquery.multiselect.filter.css");
-        $this->getController()->_css_admin_includes(Yii::app()->getConfig('generalscripts') . "jquery/jqGrid/css/ui.jqgrid.css");
-        $this->getController()->_css_admin_includes(Yii::app()->getConfig('generalscripts') . "jquery/jqGrid/css/jquery.ui.datepicker.css");
-        $this->getController()->_css_admin_includes(Yii::app()->getConfig('adminstyleurl') . "displayParticipants.css");
-        $this->getController()->_css_admin_includes(Yii::app()->getConfig('adminstyleurl') . "jquery-ui/jquery-timepicker.css");
+//        App()->getClientScript()->registerCssFile(Yii::app()->getConfig('generalscripts') . "jquery/css/jquery.multiselect.css");
+//        App()->getClientScript()->registerCssFile(Yii::app()->getConfig('generalscripts') . "jquery/css/jquery.multiselect.filter.css");
+        App()->getClientScript()->registerCssFile(Yii::app()->getConfig('generalscripts') . "jquery/jqGrid/css/ui.jqgrid.css");
+        App()->getClientScript()->registerCssFile(Yii::app()->getConfig('generalscripts') . "jquery/jqGrid/css/jquery.ui.datepicker.css");
+        App()->getClientScript()->registerCssFile(Yii::app()->getConfig('adminstyleurl') . "displayParticipants.css");
+        App()->getClientScript()->registerCssFile(Yii::app()->getConfig('adminstyleurl') . "jquery-ui/jquery-timepicker.css");
 
         Yii::app()->loadHelper('surveytranslator');
         Yii::import('application.libraries.Date_Time_Converter', true);
@@ -372,7 +372,7 @@ class tokens extends Survey_Common_Action
             eT("No token table.");// return json ? error not treated in js.
             return;
         }
-        $clang = $this->getController()->lang;
+        
         if (!hasSurveyPermission($iSurveyId, 'tokens', 'read'))
         {
             eT("We are sorry but you don't have permissions to do this.");// return json ? error not treated in js.
@@ -520,7 +520,7 @@ class tokens extends Survey_Common_Action
 
     function editToken($iSurveyId)
     {
-        $clang = $this->getController()->lang;
+        
         if (!hasSurveyPermission($iSurveyId, 'tokens', 'update') && !hasSurveyPermission($iSurveyId, 'tokens', 'create'))
         {
             eT("We are sorry but you don't have permissions to do this.");// return json ? error not treated in js.
@@ -636,7 +636,7 @@ class tokens extends Survey_Common_Action
     function addnew($iSurveyId)
     {
         $iSurveyId = sanitize_int($iSurveyId);
-        $clang = $this->getController()->lang;
+        
         if (!hasSurveyPermission($iSurveyId, 'tokens', 'create'))
         {
             Yii::app()->session['flashmessage'] = gT("You do not have sufficient rights to access this page.");
@@ -762,7 +762,7 @@ class tokens extends Survey_Common_Action
         $bTokenExists = tableExists('{{tokens_' . $iSurveyId . '}}');
         $iSurveyId = sanitize_int($iSurveyId);
         $iTokenId = sanitize_int($iTokenId);
-        $clang = $this->getController()->lang;
+        
         if (!hasSurveyPermission($iSurveyId, 'tokens', 'update'))
         {
             Yii::app()->session['flashmessage'] = gT("You do not have sufficient rights to access this page.");
@@ -862,7 +862,7 @@ class tokens extends Survey_Common_Action
     */
     function delete($iSurveyID)
     {
-        $clang = $this->getController()->lang;
+        
         $iSurveyID = sanitize_int($iSurveyID);
         $sTokenIDs = Yii::app()->request->getPost('tid');
         /* Check permissions */
@@ -899,7 +899,7 @@ class tokens extends Survey_Common_Action
         // CHECK TO SEE IF A TOKEN TABLE EXISTS FOR THIS SURVEY
         $bTokenExists = tableExists('{{tokens_' . $iSurveyId . '}}');
         $iSurveyId = sanitize_int($iSurveyId);
-        $clang = $this->getController()->lang;
+        
 
         if (!hasSurveyPermission($iSurveyId, 'tokens', 'create'))
         {
@@ -1042,7 +1042,7 @@ class tokens extends Survey_Common_Action
             $aData['thissurvey'] = $thissurvey;
             $aData['surveyid'] = $iSurveyId;
             $aData['tokenlength'] = $tokenlength;
-            $aData['dateformatdetails'] = getDateFormatData(Yii::app()->session['dateformat'],$clang->langcode);
+            $aData['dateformatdetails'] = getDateFormatData(Yii::app()->session['dateformat']->langcode);
             $aData['aAttributeFields']=GetParticipantAttributes($iSurveyId);
             $this->_renderWrappedTemplate('token', array('tokenbar', 'dummytokenform'), $aData);
         }
@@ -1054,7 +1054,7 @@ class tokens extends Survey_Common_Action
     function managetokenattributes($iSurveyId)
     {
         /* Check permissions */
-        $clang = $this->getController()->lang;
+        
         $iSurveyId = sanitize_int($iSurveyId);
         if (!hasSurveyPermission($iSurveyId, 'tokens', 'update') && !hasSurveyPermission($iSurveyID, 'surveysettings', 'update'))
         {
@@ -1105,7 +1105,7 @@ class tokens extends Survey_Common_Action
     {
         // CHECK TO SEE IF A TOKEN TABLE EXISTS FOR THIS SURVEY
         $bTokenExists = tableExists('{{tokens_' . $iSurveyId . '}}');
-        $clang = $this->getController()->lang;
+        
         $iSurveyId = sanitize_int($iSurveyId);
         if (!hasSurveyPermission($iSurveyId, 'tokens', 'update') && !hasSurveyPermission($iSurveyID, 'surveysettings', 'update'))
         {
@@ -1144,7 +1144,7 @@ class tokens extends Survey_Common_Action
     */
     function deletetokenattributes($iSurveyId)
     {
-        $clang = $this->getController()->lang;
+        
         $iSurveyId = sanitize_int($iSurveyId);
         // CHECK TO SEE IF A TOKEN TABLE EXISTS FOR THIS SURVEY
         $bTokenExists = tableExists('{{tokens_' . $iSurveyId . '}}');
@@ -1204,7 +1204,7 @@ class tokens extends Survey_Common_Action
     */
     function updatetokenattributedescriptions($iSurveyId)
     {
-        $clang = $this->getController()->lang;
+        
         $iSurveyId = sanitize_int($iSurveyId);
         if (!hasSurveyPermission($iSurveyId, 'tokens', 'update') && !hasSurveyPermission($iSurveyID, 'surveysettings', 'update'))
         {
@@ -1255,7 +1255,7 @@ class tokens extends Survey_Common_Action
     */
     function email($iSurveyId, $tokenids = null)     
     {
-        $clang = $this->getController()->lang;
+        
         $iSurveyId = sanitize_int($iSurveyId);
         /* Check permissions */
         if (!hasSurveyPermission($iSurveyId, 'tokens', 'update'))
@@ -1557,7 +1557,7 @@ class tokens extends Survey_Common_Action
     */
     function exportdialog($iSurveyId)
     {
-        $clang = $this->getController()->lang;
+        
         $iSurveyId = sanitize_int($iSurveyId);
         if (!hasSurveyPermission($iSurveyId, 'tokens', 'export'))
         {
@@ -1596,7 +1596,7 @@ class tokens extends Survey_Common_Action
     public function importldap($iSurveyId)
     {
         $iSurveyId = (int) $iSurveyId;
-        $clang = $this->getController()->lang;
+        
         if (!hasSurveyPermission($iSurveyId, 'tokens', 'import'))
         {
             Yii::app()->session['flashmessage'] = gT("You do not have sufficient rights to access this page.");
@@ -1864,7 +1864,7 @@ class tokens extends Survey_Common_Action
     */
     function import($iSurveyId)
     {
-        $clang = $this->getController()->lang;
+        
         $iSurveyId = (int) $iSurveyId;
         if (!hasSurveyPermission($iSurveyId, 'tokens', 'import'))
         {
@@ -1878,7 +1878,7 @@ class tokens extends Survey_Common_Action
             self::_newtokentable($iSurveyId);
         }
 
-        $this->getController()->_js_admin_includes(Yii::app()->getConfig('adminscripts') . 'tokens.js');
+        App()->getClientScript()->registerScriptFile(Yii::app()->getConfig('adminscripts') . 'tokens.js');
 
         $aEncodings = array(
         "armscii8" => gT("ARMSCII-8 Armenian")
@@ -2182,7 +2182,7 @@ class tokens extends Survey_Common_Action
     function tokenify($iSurveyId)
     {
         $iSurveyId = sanitize_int($iSurveyId);
-        $clang = $this->getController()->lang;
+        
         if (!hasSurveyPermission($iSurveyId, 'tokens', 'update'))
         {
             Yii::app()->session['flashmessage'] = gT("You do not have sufficient rights to access this page.");
@@ -2218,13 +2218,13 @@ class tokens extends Survey_Common_Action
             if($neededtokencount>$newtokencount)
             {
                 $aData['success'] = false;
-                $message = sprintf($clang->ngT('Only %s token has been created.','Only %s tokens have been created.',$newtokencount),$newtokencount)
-                         .sprintf($clang->ngT('Need %s token.','Need %s tokens.',$neededtokencount),$neededtokencount);
+                $message = sprintf(ngT('Only %s token has been created.','Only %s tokens have been created.',$newtokencount),$newtokencount)
+                         .sprintf(ngT('Need %s token.','Need %s tokens.',$neededtokencount),$neededtokencount);
             }
             else
             {
                 $aData['success'] = true;
-                $message = sprintf($clang->ngT('%s token has been created.','%s tokens have been created.',$newtokencount),$newtokencount);
+                $message = sprintf(ngT('%s token has been created.','%s tokens have been created.',$newtokencount),$newtokencount);
             }
             $this->_renderWrappedTemplate('token', array('tokenbar', 'message' => array(
             'title' => gT("Create tokens"),
@@ -2239,7 +2239,7 @@ class tokens extends Survey_Common_Action
     function kill($iSurveyId)
     {
         $iSurveyId = sanitize_int($iSurveyId);
-        $clang = $this->getController()->lang;
+        
         if (!hasSurveyPermission($iSurveyId, 'surveysettings', 'update') && !hasSurveyPermission($iSurveyId, 'tokens', 'delete'))
         {
             Yii::app()->session['flashmessage'] = gT("You do not have sufficient rights to access this page.");
@@ -2297,7 +2297,7 @@ class tokens extends Survey_Common_Action
     function bouncesettings($iSurveyId)
     {
         $iSurveyId = sanitize_int($iSurveyId);
-        $clang = $this->getController()->lang;
+        
         if (!hasSurveyPermission($iSurveyId, 'tokens', 'update'))
         {
             Yii::app()->session['flashmessage'] = gT("You do not have sufficient rights to access this page.");
@@ -2342,7 +2342,7 @@ class tokens extends Survey_Common_Action
         }
         else
         {
-            $this->getController()->_js_admin_includes(Yii::app()->getConfig('adminscripts') . "tokenbounce.js");
+            App()->getClientScript()->registerScriptFile(Yii::app()->getConfig('adminscripts') . "tokenbounce.js");
             $this->_renderWrappedTemplate('token', array('tokenbar', 'bounce'), $aData);
         }
     }
@@ -2358,7 +2358,7 @@ class tokens extends Survey_Common_Action
         {
             self::_newtokentable($iSurveyId);
         }
-        $clang = $this->getController()->lang;
+        
 
         Yii::app()->loadHelper("surveytranslator");
 
@@ -2405,7 +2405,7 @@ class tokens extends Survey_Common_Action
     */
     function _newtokentable($iSurveyId)
     {
-        $clang = $this->getController()->lang;
+        
         $aSurveyInfo = getSurveyInfo($iSurveyId);
         if (!hasSurveyPermission($iSurveyId, 'surveysettings', 'update') && !HasSurveyPermission($iSurveyId, 'tokens','create'))
         {

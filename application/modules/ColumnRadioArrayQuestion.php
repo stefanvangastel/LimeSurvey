@@ -155,11 +155,11 @@ class ColumnRadioArrayQuestion extends RadioArrayQuestion
     {
         $fieldname = $this->surveyid . 'X' . $this->gid . 'X' . $this->id;
 
-        $condition = "parent_qid= '{$this->id}'  AND language= '{$language->getlangcode()}'";
+        $condition = "parent_qid= '{$this->id}'  AND language= '{Yii::app()->getLanguage()}'";
         $fresult= Questions::model()->getAllRecords( $condition, array('question_order', 'title'));
         $output = "\n<table>\n\t<thead>\n\t\t<tr>\n\t\t\t<td>&nbsp;</td>\n";
 
-        $mearesult=Answers::model()->getAllRecords(" qid='{$this->id}' AND scale_id=0 AND language='{$language->getlangcode()}' ", array('sortorder','code'));
+        $mearesult=Answers::model()->getAllRecords(" qid='{$this->id}' AND scale_id=0 AND language='{Yii::app()->getLanguage()}' ", array('sortorder','code'));
         $fcount = $fresult->getRowCount();
         foreach ($fresult->readAll() as $frow)
         {
@@ -186,11 +186,11 @@ class ColumnRadioArrayQuestion extends RadioArrayQuestion
 
     public function getPrintPDF($language)
     {
-        $condition = "parent_qid= '{$this->id}'  AND language= '{$language->getlangcode()}'";
+        $condition = "parent_qid= '{$this->id}'  AND language= '{Yii::app()->getLanguage()}'";
         $fresult= Questions::model()->getAllRecords( $condition, array('question_order', 'title'));
         $output = "\n<table>\n\t<thead>\n\t\t<tr>\n\t\t\t<td>&nbsp;</td>\n";
 
-        $mearesult=Answers::model()->getAllRecords(" qid='{$this->id}' AND scale_id=0 AND language='{$language->getlangcode()}' ", array('sortorder','code'));
+        $mearesult=Answers::model()->getAllRecords(" qid='{$this->id}' AND scale_id=0 AND language='{Yii::app()->getLanguage()}' ", array('sortorder','code'));
         $fcount = $fresult->getRowCount();
 
         $i=0;
@@ -224,7 +224,7 @@ class ColumnRadioArrayQuestion extends RadioArrayQuestion
 
     public function questionProperties($prop = false)
     {
-        $clang=Yii::app()->lang;
+        
         $props=array('description' => gT("Array by column"),'group' => gT('Arrays'),'class' => 'array-flexible-column','hasdefaultvalues' => 0,'subquestions' => 1,'assessable' => 1,'answerscales' => 1,'enum' => 0);
         return $prop?$props[$prop]:$props;
     }

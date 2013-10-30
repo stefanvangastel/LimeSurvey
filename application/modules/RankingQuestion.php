@@ -6,7 +6,7 @@ class RankingQuestion extends QuestionModule
     {
         global $thissurvey;
 
-        $clang=Yii::app()->lang;
+        
         $imageurl = Yii::app()->getConfig("imageurl");
 
         $checkconditionFunction = "checkconditions";
@@ -77,17 +77,17 @@ class RankingQuestion extends QuestionModule
         }
         $answer .="</div>";
 
-        if(trim($aQuestionAttributes['choice_title'][$clang->langcode]) != '')
+        if(trim($aQuestionAttributes['choice_title'][Yii::app()->getLanguage()]) != '')
         {
-            $choice_title=htmlspecialchars(trim($aQuestionAttributes['choice_title'][$clang->langcode]), ENT_QUOTES);
+            $choice_title=htmlspecialchars(trim($aQuestionAttributes['choice_title'][Yii::app()->getLanguage()]), ENT_QUOTES);
         }
         else
         {
             $choice_title=gT("Your Choices",'js');
         }
-        if(trim($aQuestionAttributes['rank_title'][$clang->langcode]) != '')
+        if(trim($aQuestionAttributes['rank_title'][Yii::app()->getLanguage()]) != '')
         {
-            $rank_title=htmlspecialchars(trim($aQuestionAttributes['rank_title'][$clang->langcode]), ENT_QUOTES);
+            $rank_title=htmlspecialchars(trim($aQuestionAttributes['rank_title'][Yii::app()->getLanguage()]), ENT_QUOTES);
         }
         else
         {
@@ -320,7 +320,7 @@ class RankingQuestion extends QuestionModule
 
     public function getMandatoryTip()
     {
-        $clang=Yii::app()->lang;
+        
         return gT('Please rank all items').'.';
     }
 
@@ -343,7 +343,7 @@ class RankingQuestion extends QuestionModule
 
     public function getDataEntryView($language)
     {
-        $ansquery = "SELECT * FROM {{answers}} WHERE qid={$this->id} AND language='{$language->getlangcode()}' and scale_id=0 ORDER BY sortorder, answer";
+        $ansquery = "SELECT * FROM {{answers}} WHERE qid={$this->id} AND language='{Yii::app()->getLanguage()}' and scale_id=0 ORDER BY sortorder, answer";
         $ansresult = Yii::app()->db->createCommand($ansquery)->query()->readAll();
         $anscount = count($ansresult);
         $answers= array();
@@ -380,13 +380,13 @@ class RankingQuestion extends QuestionModule
 
     public function getTypeHelp($language)
     {
-        $reacount = Answers::model()->getAllRecords(" qid='{$this->id}' AND language='{$language->getlangcode()}'", array('sortorder', 'answer'))->count();
+        $reacount = Answers::model()->getAllRecords(" qid='{$this->id}' AND language='{Yii::app()->getLanguage()}'", array('sortorder', 'answer'))->count();
         return $language->gT("Please number each box in order of preference from 1 to")." $reacount";
     }
 
     public function getPrintAnswers($language)
     {
-        $dearesult=Answers::model()->getAllRecords(" qid='{$this->id}' AND language='{$language->getlangcode()}' ", array('sortorder','answer'));
+        $dearesult=Answers::model()->getAllRecords(" qid='{$this->id}' AND language='{Yii::app()->getLanguage()}' ", array('sortorder','answer'));
 
         $output = "\t<ul>\n";
         foreach ($dearesult->readAll() as $dearow)
@@ -402,7 +402,7 @@ class RankingQuestion extends QuestionModule
 
     public function getPrintPDF($language)
     {
-        $dearesult=Answers::model()->getAllRecords(" qid='{$this->id}' AND language='{$language->getlangcode()}' ", array('sortorder','answer'));
+        $dearesult=Answers::model()->getAllRecords(" qid='{$this->id}' AND language='{Yii::app()->getLanguage()}' ", array('sortorder','answer'));
 
         $output = array();
 
@@ -487,7 +487,7 @@ class RankingQuestion extends QuestionModule
 
     public function questionProperties($prop = false)
     {
-        $clang=Yii::app()->lang;
+        
         $props=array('description' => gT("Ranking"),'group' => gT("Mask questions"),'subquestions' => 0,'class' => 'ranking','hasdefaultvalues' => 0,'assessable' => 1,'answerscales' => 1,'enum' => 0);
         return $prop?$props[$prop]:$props;
     }

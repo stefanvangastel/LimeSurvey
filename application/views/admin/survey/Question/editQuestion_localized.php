@@ -13,7 +13,7 @@
         $eqrow  = array_map('htmlspecialchars', $eqrow);
         $this->renderPartial('/admin/survey/Question/editQuestion_localized_lang', array(
             'form' => $form,
-            'clang' => $clang,
+            
             'question' => $eqrow['question'],
             'language' => $eqrow['language'],
             'help' => $eqrow['help'],
@@ -28,7 +28,7 @@
           
             $this->renderPartial('/admin/survey/Question/editQuestion_localized_lang', array(
                 'form' => $form,
-                'clang' => $clang,
+                
                 'question' => $eqrow['question'],
                 'language' => $addlanguage,
                 'help' => $eqrow['help'],

@@ -541,10 +541,10 @@ EOD;
     public function getDataEntryView($language)
     {
         $qidattributes = $this->getAttributeValues();
-        $lquery = "SELECT * FROM {{questions}} WHERE scale_id=1 and parent_qid={$this->id} and language='{$language->getlangcode()}' ORDER BY question_order";
+        $lquery = "SELECT * FROM {{questions}} WHERE scale_id=1 and parent_qid={$this->id} and language='{Yii::app()->getLanguage()}' ORDER BY question_order";
         $lresult=dbExecuteAssoc($lquery)->readAll() or die ("Couldn't get labels, Type \":\"<br />$lquery<br />");
 
-        $meaquery = "SELECT * FROM {{questions}} WHERE scale_id=0 and parent_qid={$this->id} and language='{$language->getlangcode()}' ORDER BY question_order";
+        $meaquery = "SELECT * FROM {{questions}} WHERE scale_id=0 and parent_qid={$this->id} and language='{Yii::app()->getLanguage()}' ORDER BY question_order";
         $mearesult=dbExecuteAssoc($meaquery)->readAll() or die ("Couldn't get answers, Type \":\"<br />$meaquery<br />");
 
         $output = "<table>";
@@ -587,10 +587,10 @@ EOD;
     public function getPrintAnswers($language)
     {
         $fieldname = $this->surveyid . 'X' . $this->gid . 'X' . $this->id;
-        $mearesult=Questions::model()->getAllRecords(" parent_qid='{$this->id}' and scale_id=0 AND language='{$language->getlangcode()}' ", array('question_order'));
+        $mearesult=Questions::model()->getAllRecords(" parent_qid='{$this->id}' and scale_id=0 AND language='{Yii::app()->getLanguage()}' ", array('question_order'));
 
         $output = "\n<table>\n\t<thead>\n\t\t<tr>\n\t\t\t<td>&nbsp;</td>\n";
-        $fresult=Questions::model()->getAllRecords(" parent_qid='{$this->id}' and scale_id=1 AND language='{$language->getlangcode()}' ", array('question_order'));
+        $fresult=Questions::model()->getAllRecords(" parent_qid='{$this->id}' and scale_id=1 AND language='{Yii::app()->getLanguage()}' ", array('question_order'));
 
         $fcount = $fresult->getRowCount();
         $i=0;
@@ -640,9 +640,9 @@ EOD;
 
     public function getPrintPDF($language)
     {
-        $mearesult=Questions::model()->getAllRecords(" parent_qid='{$this->id}' and scale_id=0 AND language='{$language->getlangcode()}' ", array('question_order'));
+        $mearesult=Questions::model()->getAllRecords(" parent_qid='{$this->id}' and scale_id=0 AND language='{Yii::app()->getLanguage()}' ", array('question_order'));
 
-        $fresult=Questions::model()->getAllRecords(" parent_qid='{$this->id}' and scale_id=1 AND language='{$language->getlangcode()}' ", array('question_order'));
+        $fresult=Questions::model()->getAllRecords(" parent_qid='{$this->id}' and scale_id=1 AND language='{Yii::app()->getLanguage()}' ", array('question_order'));
         $fcount = $fresult->getRowCount();
 
         $i=0;
@@ -725,7 +725,7 @@ EOD;
 
     public function questionProperties($prop = false)
     {
-        $clang=Yii::app()->lang;
+        
         $props=array('description' => gT("Array (Texts)"),'group' => gT('Arrays'),'subquestions' => 2,'class' => 'array-multi-flexi-text','hasdefaultvalues' => 0,'assessable' => 0,'answerscales' => 0,'enum' => 0);
         return $prop?$props[$prop]:$props;
     }

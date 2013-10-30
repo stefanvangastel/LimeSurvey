@@ -35,7 +35,7 @@ class questiongroup2 extends Survey_Common_Action
     {
         $action = $_POST['action'];
         $surveyid = $_POST['sid'];
-        $clang = $this->getController()->lang;
+        
 
         if ($action == 'importgroup')
         {
@@ -104,7 +104,7 @@ class questiongroup2 extends Survey_Common_Action
 
         if (hasSurveyPermission($surveyid, 'surveycontent', 'read'))
         {
-            $clang = $this->getController()->lang;
+            
 
             Yii::app()->session['FileManagerContext'] = "create:group:{$surveyid}";
 
@@ -114,7 +114,7 @@ class questiongroup2 extends Survey_Common_Action
             $baselang = Survey::model()->findByPk($surveyid)->language;
             $grplangs[] = $baselang;
             $grplangs = array_reverse($grplangs);
-            $this->getController()->_js_admin_includes(Yii::app()->getConfig('adminscripts') . 'questiongroup.js');
+            App()->getClientScript()->registerScriptFile(Yii::app()->getConfig('adminscripts') . 'questiongroup.js');
 
             $aData['display']['menu_bars']['surveysummary'] = 'addgroup';
             $aData['surveyid'] = $surveyid;
@@ -229,7 +229,7 @@ class questiongroup2 extends Survey_Common_Action
             LimeExpressionManager::RevertUpgradeConditionsToRelevance($iSurveyId);
 
             $iGroupId = sanitize_int($iGroupId);
-            $clang = $this->getController()->lang;
+            
 
             $iGroupsDeleted = Groups::deleteWithDependency($iGroupId, $iSurveyId);
 
@@ -258,7 +258,7 @@ class questiongroup2 extends Survey_Common_Action
     {
         $this->getController()->navData['surveyId'] = $surveyid;
         $this->getController()->navData['groupId'] = $gid;
-        $clang = $this->getController()->lang;
+        
         $surveyid = sanitize_int($surveyid);
         $gid = sanitize_int($gid);
         $aViewUrls = $aData = array();
@@ -404,7 +404,7 @@ class questiongroup2 extends Survey_Common_Action
      */
     protected function _renderWrappedTemplate($sAction = 'survey/QuestionGroups', $aViewUrls = array(), $aData = array())
     {
-        $this->getController()->_css_admin_includes(Yii::app()->getConfig('adminstyleurl')."superfish.css");
+        App()->getClientScript()->registerCssFile(Yii::app()->getConfig('adminstyleurl')."superfish.css");
         parent::_renderWrappedTemplate($sAction, $aViewUrls, $aData);
     }
 }

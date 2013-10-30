@@ -229,14 +229,14 @@ class ShortTextQuestion extends TextQuestion
     public function getDataEntryView($language)
     {
         $qidattributes = $this->getAttributeValues();
-        if (isset($qidattributes['prefix']) && trim($qidattributes['prefix'][$language->getlangcode()]) != '') {
-            $prefix = $qidattributes['prefix'][$language->getlangcode()];
+        if (isset($qidattributes['prefix']) && trim($qidattributes['prefix'][Yii::app()->getLanguage()]) != '') {
+            $prefix = $qidattributes['prefix'][Yii::app()->getLanguage()];
         } else {
             $prefix = '';
         }
 
-        if (isset($qidattributes['suffix']) && trim($qidattributes['suffix'][$language->getlangcode()]) != '') {
-            $suffix = $qidattributes['suffix'][$language->getlangcode()];
+        if (isset($qidattributes['suffix']) && trim($qidattributes['suffix'][Yii::app()->getLanguage()]) != '') {
+            $suffix = $qidattributes['suffix'][Yii::app()->getLanguage()];
         } else {
             $suffix = '';
         }
@@ -309,7 +309,7 @@ class ShortTextQuestion extends TextQuestion
 
     public function questionProperties($prop = false)
     {
-        $clang=Yii::app()->lang;
+        
         $props=array('description' => gT("Short Free Text"),'group' => gT("Text questions"),'subquestions' => 0,'class' => 'text-short','hasdefaultvalues' => 1,'assessable' => 0,'answerscales' => 0,'enum' => 0);
         return $prop?$props[$prop]:$props;
     }

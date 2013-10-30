@@ -41,7 +41,7 @@ class labels extends Survey_Common_Action
      */
     public function importlabelresources()
     {
-        $clang = $this->getController()->lang;
+        
         $lid = returnGlobal('lid');
 
         if (!empty($lid))
@@ -113,7 +113,7 @@ class labels extends Survey_Common_Action
      */
     public function import()
     {
-        $clang = $this->getController()->lang;
+        
         $action = returnGlobal('action');
         $aViewUrls = array();
 
@@ -159,7 +159,7 @@ class labels extends Survey_Common_Action
     {
         Yii::app()->loadHelper('surveytranslator');
 
-        $clang = $this->getController()->lang;
+        
         $lid = sanitize_int($lid);
         $aViewUrls = array();
 
@@ -225,14 +225,14 @@ class labels extends Survey_Common_Action
         Yii::app()->session['FileManagerContext'] = "edit:label:{$lid}";
 
         // Gets the current language
-        $clang = $this->getController()->lang;
+        
         $action = 'labels';
         $aViewUrls = array();
         $aData = array();
 
         // Includes some javascript files
-        $this->getController()->_js_admin_includes(Yii::app()->getConfig('adminscripts') . 'labels.js');
-        $this->getController()->_js_admin_includes(Yii::app()->getConfig('generalscripts') . 'jquery/jquery.json.min.js');
+        App()->getClientScript()->registerScriptFile(Yii::app()->getConfig('adminscripts') . 'labels.js');
+        App()->getClientScript()->registerScriptFile(Yii::app()->getConfig('generalscripts') . 'jquery/jquery.json.min.js');
         // Checks if user have the sufficient rights to manage the labels
         if (Yii::app()->session['USER_RIGHT_SUPERADMIN'] == 1 || Yii::app()->session['USER_RIGHT_MANAGE_LABEL'] == 1)
         {
@@ -295,7 +295,7 @@ class labels extends Survey_Common_Action
                 $aViewUrls['labelview_view'][] = array(
                     'results' => $results,
                     'lslanguages' => $lslanguages,
-                    'clang' => $clang,
+                    
                     'lid' => $lid,
                     'maxsortorder' => $maxsortorder,
                 //    'msorow' => $maxresult->sortorder,
@@ -356,7 +356,7 @@ class labels extends Survey_Common_Action
      */
     public function exportmulti()
     {
-        $this->getController()->_js_admin_includes(Yii::app()->getConfig('adminscripts') . 'labels.js');
+        App()->getClientScript()->registerScriptFile(Yii::app()->getConfig('adminscripts') . 'labels.js');
         $this->_renderWrappedTemplate('labels', 'exportmulti_view');
     }
 

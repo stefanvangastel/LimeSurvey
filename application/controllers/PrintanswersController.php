@@ -76,7 +76,6 @@ class PrintanswersController extends LSYii_Controller {
         //Fin session time out
 
         $iResponseID = $_SESSION['survey_'.$iSurveyID]['srid']; //I want to see the answers with this id
-        $clang = $_SESSION['survey_'.$iSurveyID]['s_lang'];
 
         //Ensure script is not run directly, avoid path disclosure
         //if (!isset($rootdir) || isset($_REQUEST['$rootdir'])) {die( "browse - Cannot run this script directly");}
@@ -86,13 +85,11 @@ class PrintanswersController extends LSYii_Controller {
         if (isset($_SESSION['survey_'.$iSurveyID]['s_lang']))
         {
 
-            $clang = SetSurveyLanguage( $iSurveyID, $_SESSION['survey_'.$iSurveyID]['s_lang']);
             $sLanguageCode = $_SESSION['survey_'.$iSurveyID]['s_lang'];
         }
         else
         {
             $sLanguageCode = Survey::model()->findByPk($iSurveyID)->language;
-            $clang = SetSurveyLanguage( $iSurveyID, $sLanguageCode);
         }
 
         // Get the survey inforamtion

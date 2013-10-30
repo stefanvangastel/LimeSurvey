@@ -27,7 +27,7 @@
         </script>
     </head>
     <body>
-        <div class='header ui-widget-header'><strong><?php printf($clang->ngT("Select which fields to import as attributes with your participant.","Select which fields to import as attributes with your %s participants.",$linecount), $linecount); ?></strong></div>
+        <div class='header ui-widget-header'><strong><?php printf(ngT("Select which fields to import as attributes with your participant.","Select which fields to import as attributes with your %s participants.",$linecount), $linecount); ?></strong></div>
         <div class="main">
             <div id="csvattribute" class='container'>
                 <div class="heading"><?php eT("CSV field names "); ?></div>

@@ -3178,48 +3178,6 @@ EOD;
         print $pre;
         print $body;
     }
-
-    /**
-     * Stub to access LimeSurvey's functions for internationalizing strings
-     * @param <type> $string
-     * @return <type>
-     */
-    function gT($string)
-    {
-        // ultimately should call i8n functiouns
-        global $clang;
-        if (isset($clang)) {
-            return gT($string);
-        }
-        else {
-            return $string;
-        }
-    }
-
-
-    /**
-    * Stub to access LimeSurvey's functions for internationalizing strings
-    *
-    * @param string $single
-    * @param string $plural
-    * @param integer $number
-    */
-    function ngT($single, $plural, $number)
-    {
-        // ultimately should call i8n functiouns
-        global $clang;
-        if (isset($clang)) {
-            return $clang->ngT($single, $plural, $number);
-        }
-        else {
-            if ($number = 1) {
-                return $single;
-            } else {
-                return $plural;
-            }
-        }
-    }
-
 }
 
 /**

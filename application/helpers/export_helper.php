@@ -168,7 +168,7 @@ function SPSSGetValues ($field = array()) {
 * @return array
 */
 function SPSSFieldMap($iSurveyID, $prefix = 'V') {
-    global $clang, $surveyprivate, $tokensexist, $language;
+    global $surveyprivate, $tokensexist, $language;
 
     $fieldmap = createFieldMap($iSurveyID,false,false,getBaseLanguageFromSurveyID($iSurveyID));
 

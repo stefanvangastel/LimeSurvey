@@ -135,7 +135,7 @@ function makegraph($currentstep, $total)
     value: '.$size.'
     });
     ;});';
-    if (getLanguageRTL($clang->langcode))
+    if (getLanguageRTL(Yii::app()->getLanguage()))
     {
         $graph.='
         $(document).ready(function() {
@@ -149,7 +149,7 @@ function makegraph($currentstep, $total)
     <div id="progress-wrapper">
     <span class="hide">'.sprintf(gT('You have completed %s%% of this survey'),$size).'</span>
     <div id="progress-pre">';
-    if (getLanguageRTL($clang->langcode))
+    if (getLanguageRTL(Yii::app()->getLanguage()))
     {
         $graph.='100%';
     }
@@ -161,7 +161,7 @@ function makegraph($currentstep, $total)
     $graph.='</div>
     <div id="progressbar"></div>
     <div id="progress-post">';
-    if (getLanguageRTL($clang->langcode))
+    if (getLanguageRTL(Yii::app()->getLanguage()))
     {
         $graph.='0%';
     }
@@ -1035,7 +1035,7 @@ function sendSubmitNotifications($surveyid)
 
     if ($thissurvey['allowsave'] == "Y" && isset($_SESSION['survey_'.$surveyid]['scid']))
     {
-        $aReplacementVars['RELOADURL']="".Yii::app()->getController()->createUrl("/survey/index/sid/{$surveyid}/loadall/reload/scid/".$_SESSION['survey_'.$surveyid]['scid']."/loadname/".urlencode($_SESSION['survey_'.$surveyid]['holdname'])."/loadpass/".urlencode($_SESSION['survey_'.$surveyid]['holdpass'])."/lang/".urlencode($clang->langcode));
+        $aReplacementVars['RELOADURL']="".Yii::app()->getController()->createUrl("/survey/index/sid/{$surveyid}/loadall/reload/scid/".$_SESSION['survey_'.$surveyid]['scid']."/loadname/".urlencode($_SESSION['survey_'.$surveyid]['holdname'])."/loadpass/".urlencode($_SESSION['survey_'.$surveyid]['holdpass'])."/lang/".urlencode(Yii::app()->getLanguage()));
         if ($bIsHTML)
         {
             $aReplacementVars['RELOADURL']="<a href='{$aReplacementVars['RELOADURL']}'>{$aReplacementVars['RELOADURL']}</a>";
@@ -1999,7 +1999,7 @@ function surveymover()
     //a user presses enter.
     //
     //Attribute accesskey added for keyboard navigation.
-    global $thissurvey, $clang;
+    global $thissurvey;
     global $surveyid, $presentinggroupdescription;
 
     
@@ -2475,8 +2475,7 @@ function encodeEmail($mail, $text="", $class="", $params=array())
 */
 function GetReferringUrl()
 {
-    global $clang;
-
+    
     
 
     // read it from server variable
@@ -2517,7 +2516,7 @@ function display_first_page() {
     // Fill some necessary var for template
     $navigator = surveymover();
     $sitename = Yii::app()->getConfig('sitename');
-    $languagechanger=makeLanguageChangerSurvey($clang->langcode);
+    $languagechanger=makeLanguageChangerSurvey(Yii::app()->getLanguage());
 
     sendCacheHeaders();
     LimeExpressionManager::StartProcessingPage();
@@ -2676,45 +2675,6 @@ function UpdateSessionQuestion($surveyid, $language)
     }
 }
 
-//For multilanguage surveys
-// If null or 0 is given for $surveyid then the default language from config-defaults.php is returned
-function SetSurveyLanguage($surveyid, $language)
-{
-    $surveyid=sanitize_int($surveyid);
-    $default_language = Yii::app()->getConfig('defaultlang');
-
-    if (isset($surveyid) && $surveyid>0)
-    {
-        $default_survey_language= Survey::model()->findByPk($surveyid)->language;
-        $additional_survey_languages = Survey::model()->findByPk($surveyid)->getAdditionalLanguages();
-        if (!isset($language) || ($language=='')
-        || !( in_array($language,$additional_survey_languages) || $language==$default_survey_language)
-        )
-        {
-            // Language not supported, fall back to survey's default language
-            $_SESSION['survey_'.$surveyid]['s_lang'] = $default_survey_language;
-        } else {
-            $_SESSION['survey_'.$surveyid]['s_lang'] =  $language;
-        }
-        
-        $thissurvey=getSurveyInfo($surveyid, @$_SESSION['survey_'.$surveyid]['s_lang']);
-        Yii::app()->loadHelper('surveytranslator');
-        $_SESSION['dateformats'] = getDateFormatData($thissurvey['surveyls_dateformat']);
-        LimeExpressionManager::SetEMLanguage($_SESSION['survey_'.$surveyid]['s_lang']);
-    }
-    else
-    {
-        if(!$language)
-        {
-            $language=$default_language;
-        }
-        $_SESSION['survey_'.$surveyid]['s_lang'] = $language;
-    }
-
-    $oApplication=Yii::app();
-    $oApplication->lang=$clang;
-    return $clang;
-}
 
 
 // Closing PHP tag intentionally left out - yes, it is okay

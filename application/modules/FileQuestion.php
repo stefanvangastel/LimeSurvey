@@ -433,7 +433,7 @@ OUTPUT;
 
     public function questionProperties($prop = false)
     {
-        $clang=Yii::app()->lang;
+        
         $props=array('description' => gT("File upload"),'group' => gT("Mask questions"),'subquestions' => 0,'class' => 'generic_question','hasdefaultvalues' => 0,'assessable' => 0,'answerscales' => 0,'enum' => 0);
         return $prop?$props[$prop]:$props;
     }

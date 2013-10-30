@@ -37,10 +37,10 @@ class statistics extends Survey_Common_Action {
     {
         $surveyid = sanitize_int($surveyid);
         //TODO: Convert question types to views
-        $clang = $this->getController()->lang;
+        
 
         $imageurl = Yii::app()->getConfig("imageurl");
-        $aData = array('clang' => $clang, 'imageurl' => $imageurl);
+        $aData = array( 'imageurl' => $imageurl);
         $aData['sql']='';
 
         /*
@@ -96,7 +96,7 @@ class statistics extends Survey_Common_Action {
         }
         
         //Call the javascript file
-        $this->getController()->_js_admin_includes(Yii::app()->getConfig('adminscripts') . 'statistics.js');
+        App()->getClientScript()->registerScriptFile(Yii::app()->getConfig('adminscripts') . 'statistics.js');
 
         $aData['display']['menu_bars']['browse'] = gT("Quick statistics");
 

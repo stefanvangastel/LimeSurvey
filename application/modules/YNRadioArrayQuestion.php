@@ -261,7 +261,7 @@ class YNRadioArrayQuestion extends RadioArrayQuestion
 
     public function getDataEntryView($language)
     {
-        $meaquery = "SELECT title, question FROM {{questions}} WHERE parent_qid={$this->id} AND language='{$language->getlangcode()}' ORDER BY question_order";
+        $meaquery = "SELECT title, question FROM {{questions}} WHERE parent_qid={$this->id} AND language='{Yii::app()->getLanguage()}' ORDER BY question_order";
         $mearesult = dbExecuteAssoc($meaquery)->readAll();
         $output = "<table>";
         foreach ($mearesult as $mearow)
@@ -285,7 +285,7 @@ class YNRadioArrayQuestion extends RadioArrayQuestion
     public function getPrintAnswers($language)
     {
         $fieldname = $this->surveyid . 'X' . $this->gid . 'X' . $this->id;
-        $condition = "parent_qid = '{$this->id}'  AND language= '{$language->getlangcode()}'";
+        $condition = "parent_qid = '{$this->id}'  AND language= '{Yii::app()->getLanguage()}'";
         $mearesult= Questions::model()->getAllRecords( $condition, array('question_order'));
 
         $output = '
@@ -321,7 +321,7 @@ class YNRadioArrayQuestion extends RadioArrayQuestion
 
     public function getPrintPDF($language)
     {
-        $condition = "parent_qid = '{$this->id}'  AND language= '{$language->getlangcode()}'";
+        $condition = "parent_qid = '{$this->id}'  AND language= '{Yii::app()->getLanguage()}'";
         $mearesult= Questions::model()->getAllRecords( $condition, array('question_order'));
 
         $pdfoutput = array();
@@ -379,7 +379,7 @@ class YNRadioArrayQuestion extends RadioArrayQuestion
 
     public function questionProperties($prop = false)
     {
-        $clang=Yii::app()->lang;
+        
         $props=array('description' => gT("Array (Yes/No/Uncertain)"),'group' => gT('Arrays'),'subquestions' => 1,'class' => 'array-yes-uncertain-no','hasdefaultvalues' => 0,'assessable' => 1,'answerscales' => 0,'enum' => 0);
         return $prop?$props[$prop]:$props;
     }

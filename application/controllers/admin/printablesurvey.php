@@ -32,9 +32,9 @@ class printablesurvey extends Survey_Common_Action
         $surveyid = sanitize_int($surveyid);
         if(!hasSurveyPermission($surveyid,'surveycontent','read'))
         {
-            $clang = $this->getController()->lang;
+            
             $aData['surveyid'] = $surveyid;
-            $this->getController()->_css_admin_includes(Yii::app()->getConfig('adminstyleurl')."superfish.css");
+            App()->getClientScript()->registerCssFile(Yii::app()->getConfig('adminstyleurl')."superfish.css");
             $message['title']= gT('Access denied!');
             $message['message']= gT('You do not have sufficient rights to access this page.');
             $message['class']= "error";
@@ -333,10 +333,10 @@ class printablesurvey extends Survey_Common_Action
                         $question['QUESTION_CLASS'] ="max-chars-{$qidattributes['maximum_chars']} ".$question['QUESTION_CLASS'];
                     }
 
-                    $help = $q->getTypeHelp($clang);
+                    $help = $q->getTypeHelp();
                     $question['QUESTION_TYPE_HELP'] .= $help;
                     $question['QUESTION_TYPE_HELP'] .= self::_array_filter_help($qidattributes, $surveyprintlang, $surveyid);
-                    $question['ANSWER'] .= $q->getPrintAnswers($clang);
+                    $question['ANSWER'] .= $q->getPrintAnswers();
                     $question['QUESTION_TYPE_HELP'] = self::_star_replace($question['QUESTION_TYPE_HELP']);
                     $group['QUESTIONS'] .= self::_populate_template( 'question' , $question);
                 }
@@ -491,7 +491,7 @@ class printablesurvey extends Survey_Common_Action
     }
 
     private function _min_max_answers_help($qidattributes, $surveyprintlang, $surveyid) {
-        $clang = $this->getController()->lang;
+        
         $output = "";
         if(!empty($qidattributes['min_answers'])) {
             $output .= "\n<p class='extrahelp'>".sprintf(gT("Please choose at least %s items."), $qidattributes['min_answers'])."</p>\n";
@@ -579,7 +579,7 @@ class printablesurvey extends Survey_Common_Action
 
     private function _array_filter_help($qidattributes, $surveyprintlang, $surveyid) 
     {
-        $clang = $this->getController()->lang;
+        
         $output = "";
         if(!empty($qidattributes['array_filter']))
         {

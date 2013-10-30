@@ -3,7 +3,7 @@ class FiveListQuestion extends QuestionModule
 {
     public function getAnswerHTML()
     {
-        $clang=Yii::app()->lang;
+        
         $imageurl = Yii::app()->getConfig("imageurl");
         $checkconditionFunction = "checkconditions";
         $aQuestionAttributes=  $this->getAttributeValues();
@@ -239,7 +239,7 @@ class FiveListQuestion extends QuestionModule
 
     public function questionProperties($prop = false)
     {
-        $clang=Yii::app()->lang;
+        
         $props=array('description' => gT("5 Point Choice"),'group' => gT("Single choice questions"),'subquestions' => 0,'class' => 'choice-5-pt-radio','hasdefaultvalues' => 0,'assessable' => 0,'answerscales' => 0,'enum' => 0);
         return $prop?$props[$prop]:$props;
     }

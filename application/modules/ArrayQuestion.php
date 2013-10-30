@@ -74,7 +74,7 @@ abstract class ArrayQuestion extends QuestionModule
 
     public function getMandatoryTip()
     {
-        $clang=Yii::app()->lang;
+        
         return gT('Please complete all parts').'.';
     }
 

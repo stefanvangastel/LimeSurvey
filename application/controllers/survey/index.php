@@ -147,7 +147,6 @@ class index extends CAction {
         global $surveyid;
         global $thissurvey, $thisstep;
         global $clienttoken, $tokensexist, $token;
-        global $clang;
         
         @ini_set('session.gc_maxlifetime', Yii::app()->getConfig('sess_expiration'));
         
@@ -182,7 +181,6 @@ class index extends CAction {
         // collect all data in this method to pass on later
         $redata = compact(array_keys(get_defined_vars()));
 
-        $clang = $this->_loadLimesurveyLang($surveyid);
         if ( $this->_isClientTokenDifferentFromSessionToken($clienttoken,$surveyid) )
         {
             $aMessage = array(
@@ -272,7 +270,6 @@ class index extends CAction {
         if ($surveyid && $surveyExists)
         {
             LimeExpressionManager::SetSurveyId($surveyid); // must be called early - it clears internal cache if a new survey is being used
-            $clang = SetSurveyLanguage( $surveyid, $sTempLanguage);
             UpdateSessionGroupList($surveyid, $sTempLanguage);  // to refresh the language strings in the group list session variable
             
             
@@ -286,7 +283,6 @@ class index extends CAction {
             else{
                 $sDisplayLanguage = Yii::app()->getConfig('defaultlang');
             }
-            $clang = $this->_loadLimesurveyLang(sanitize_languagecode($sDisplayLanguage));
             if(!isset($defaulttemplate))
             {
                 $defaulttemplate=Yii::app()->getConfig("defaulttemplate");
@@ -685,7 +681,7 @@ class index extends CAction {
         if (isset($param['action']) && (in_array($param['action'],array('previewgroup','previewquestion'))))
         {
             // Unset all SESSION: be sure to have the last version
-            unset($_SESSION['fieldmap-' . $surveyid . $clang->langcode]);// Needed by createFieldMap: else fieldmap can be outdated
+            unset($_SESSION['fieldmap-' . $surveyid . Yii::app()->getLanguage()]);// Needed by createFieldMap: else fieldmap can be outdated
             unset($_SESSION['survey_'.$surveyid]);
             if ($param['action'] == 'previewgroup')
             {
